@@ -1,0 +1,44 @@
+Projeto
+Nome do Projeto: TecnoSolda
+Gerente do Projeto: Vitor Lemos Moroni
+Patrocinador Principal: Senai Lages SC
+Data de Criação:22/10/2026.
+
+Problema
+  O Curso de Soldagem estava com dificuldade para verificar se seus alunos estavam utilizando os EPIs (Equipamentos de Proteção Individual) corretamente, a fim evitar acidentes, durante o horário de realização de atividades praticas. 
+
+Objetivo
+ Fazer um Sistema que analisa os alunos para ver se estão usados os EPIs (Equipamento de Proteção Individual), Através de uma Webcam que ver se a EPI está completa.
+
+Resultado Esperado 
+•	Prevenir Acidentes;
+•	Reduzir Custos com Equipamentos;
+•	Aumenta a Segurança dos Alunos;
+•	Impede os alunos de se machucar gravemente.
+
+ Principais Entregas 
+  Nossa Equipe está se esforçado ao máximo para entregar um sistema seguro e eficiente. 
+  O sistema vai ter uma webcam para analisar se o aluno ou aluna está todo vestindo com o EPI.
+ Caso houve que um aluno ou aluna não esta utilizando o EPI todo , o sistema vai disparar um arma para avisa  aluno/a e o professor ou professora.
+
+Orçamento
+O orçamento total foi
+
+Recursos 
+|Equipamento 
+•	| Raspberry Pi 3 Modelo B | 1 por box;
+•	| Cartão microSD de 64 GB | 1 por Raspberry;
+•	| Câmera IP Wi-Fi | 1 por box;
+•	| Fonte de alimentação do Raspberry;
+•	| Fonte de alimentação da câmera | 1 por câmera;
+•	| Rede Wi-Fi local | Conforme a cobertura necessária;
+•	| Sistema de alerta ao professor | 1 sistema central ou solução equivalente.
+
+Premissas
+Nossa equipe está a disposição para quaisquer dúvidas ou problema.
+
+Aprovações
+Patrocinador
+SENAI Lages SC
+Gerente 
+Vitor Lemos Moroni
