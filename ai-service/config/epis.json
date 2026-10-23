@@ -1,0 +1,53 @@
+﻿{
+  "schema_version": 1,
+  "epis": [
+    {
+      "code": "EPI01",
+      "name": "Avental de soldagem",
+      "required": true,
+      "detection_class": "avental_soldagem",
+      "checks": [
+        "associado_ao_corpo"
+      ],
+      "manufacturer": null,
+      "model": null
+    },
+    {
+      "code": "EPI02",
+      "name": "Máscara de soldagem",
+      "required": true,
+      "detection_class": "mascara_soldagem",
+      "checks": [
+        "presenca",
+        "posicao_levantada",
+        "posicao_abaixada"
+      ],
+      "manufacturer": null,
+      "model": null
+    },
+    {
+      "code": "EPI03",
+      "name": "Luvas de soldagem",
+      "required": true,
+      "detection_class": "luva_soldagem",
+      "checks": [
+        "mao_esquerda",
+        "mao_direita"
+      ],
+      "manufacturer": null,
+      "model": null
+    },
+    {
+      "code": "EPI04",
+      "name": "Respirador com válvula",
+      "required": true,
+      "detection_class": "respirador_valvula",
+      "checks": [
+        "visivel_com_mascara_levantada",
+        "caracteristica_valvula"
+      ],
+      "manufacturer": null,
+      "model": null
+    }
+  ]
+}
