@@ -1,0 +1,24 @@
+﻿__pycache__/
+*.py[cod]
+.venv/
+.env
+node_modules/
+dist/
+coverage/
+*.log
+# Dados e pesos privados ficam fora do Git.
+ai-service/datasets/*
+!ai-service/datasets/README.md
+ai-service/models/*
+!ai-service/models/README.md
+*.mp4
+*.avi
+*.mov
+
+*.tsbuildinfo
+test-artifacts/
+*.pem
+*.key
+.env.*
+!.env.example
+

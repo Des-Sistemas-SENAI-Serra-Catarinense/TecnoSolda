@@ -1,3 +1,45 @@
+# TecnoSolda — monitoramento local da cabine
+
+O módulo de câmera ao vivo usa **React + FastAPI + OpenCV**, com transmissão MJPEG,
+estados por WebSocket e acesso autenticado. O vídeo vem de câmera real; as caixas,
+confianças, sensor e sinalização são explicitamente simulados nesta etapa.
+Não há imagens fictícias para substituir uma câmera desconectada.
+
+**Comece pelo [guia da câmera ao vivo](docs/arquitetura/camera-ao-vivo.md)**:
+instalação, criação da senha, execução local, configuração HTTPS da LAN e testes.
+O componente está em frontend/src/components/CameraLiveView.tsx.
+
+Acesso local após configuração: http://127.0.0.1:8000. Não há usuário/senha padrão.
+Nenhuma câmera foi encontrada no ambiente de desenvolvimento; captura física e
+desempenho no Raspberry Pi ainda precisam de validação no dispositivo.
+
+## Protótipo da máquina de estados (CLI)
+
+A primeira versão executável simula uma cabine, uma câmera frontal, o sensor da
+tocha, as luzes e o alarme. Não utiliza IA treinada ou dispositivos reais.
+
+```sh
+python ai-service/run.py --scenario perda-visibilidade --events
+python ai-service/run.py --interactive --role operador
+python -m unittest discover -s ai-service/tests -p test_safety.py -v
+```
+
+Requer Python >= 3.11, sem dependências externas. A confirmação ocorre em duas
+etapas: respirador e demais EPIs visíveis com máscara levantada, depois máscara
+abaixada. Perda de visibilidade ou falha desliga o verde e exige nova verificação.
+
+- [Plano técnico e modelo de dados](docs/arquitetura/plano-tecnico.md)
+- [Máquina de estados](docs/arquitetura/maquina-de-estados.md)
+- [Execução, cenários e testes](docs/testes/prototipo.md)
+- [Limites e privacidade](docs/seguranca/limites-e-privacidade.md)
+
+O verde indica somente uma verificação visual satisfatória. Não substitui
+supervisão, inspeção física ou procedimentos da oficina.
+
+O roteiro pedagógico original está preservado abaixo.
+
+---
+
 # EPI nas Cabines de Solda — Roteiro do Aluno
 
 > Encontro 1 · 22/10/2026 · Prof. Vitor
