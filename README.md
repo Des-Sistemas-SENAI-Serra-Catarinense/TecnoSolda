@@ -1,4 +1,8 @@
-# TecnoSolda — monitoramento local da cabine
+﻿# TecnoSolda — monitoramento local da cabine
+
+**Preparação da IA:** [cadastro, datasets, treinamento e registro dos modelos](docs/treinamento/guia-pratico.md).
+Comece com `python ai-service/training.py catalog` e `python ai-service/training.py doctor`.
+Os comandos usam o Python do sistema; nenhum modelo foi treinado ou ativado automaticamente.
 
 O módulo de câmera ao vivo usa **React + FastAPI + OpenCV**, com transmissão MJPEG,
 estados por WebSocket e acesso autenticado. O vídeo vem de câmera real; as caixas,
@@ -12,6 +16,13 @@ O componente está em frontend/src/components/CameraLiveView.tsx.
 Acesso local após configuração: http://127.0.0.1:8000. Não há usuário/senha padrão.
 Nenhuma câmera foi encontrada no ambiente de desenvolvimento; captura física e
 desempenho no Raspberry Pi ainda precisam de validação no dispositivo.
+
+## Teste gráfico da máscara
+
+Execute `python teste_mascara.py` para coletar fotos, treinar um classificador
+experimental local e testar vermelho (levantada), verde (abaixada) ou inconclusivo.
+O ensaio usa características visuais reais, é separado do YOLO e não aciona hardware.
+Consulte o [passo a passo do teste gráfico](docs/testes/mascara-grafica.md).
 
 ## Protótipo da máquina de estados (CLI)
 

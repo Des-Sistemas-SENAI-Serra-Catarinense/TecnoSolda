@@ -1,0 +1,43 @@
+﻿{
+  "schema_version": 1,
+  "models": [
+    {
+      "id": "epis_detector",
+      "task": "detect",
+      "base_weights": "yolo11n.pt",
+      "classes": [
+        "pessoa",
+        "avental_soldagem",
+        "luva_soldagem",
+        "mascara_soldagem",
+        "respirador_valvula"
+      ],
+      "image_size": 640,
+      "epochs": 100,
+      "batch": 4,
+      "status": "PLANEJADO",
+      "limitations": [
+        "Não distingue sozinho a posição da máscara.",
+        "Exige associação de luvas às mãos e dos EPIs à pessoa."
+      ]
+    },
+    {
+      "id": "mascara_posicao",
+      "task": "classify",
+      "base_weights": "yolo11n-cls.pt",
+      "classes": [
+        "abaixada",
+        "inconclusiva",
+        "levantada"
+      ],
+      "image_size": 224,
+      "epochs": 50,
+      "batch": 8,
+      "status": "PLANEJADO",
+      "limitations": [
+        "Exige recorte contextual da cabeça e máscara.",
+        "Baixa confiança e recorte inválido devem ser inconclusivos."
+      ]
+    }
+  ]
+}
