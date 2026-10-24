@@ -1,238 +1,278 @@
-# EPI nas Cabines de Solda — Roteiro do Aluno
+# Detector de EPI na Cabine de Solda — YOLO26 + Raspberry Pi 3
 
-> Encontro 1 · 22/10/2026 · Prof. Vitor
+Webcam apontada para a cabine → Raspberry Pi 3 roda um modelo YOLO treinado pela turma →
+se o aluno está **com a tocha na mão** e falta **luva**, **avental** ou **máscara abaixada**,
+o Pi aciona um **relé** e acende a **luz vermelha**.
 
-## O desafio
+```
+webcam ──► Raspberry Pi 3 ──► YOLO26n (.onnx) ──► regras ──► GPIO17 ──► relé ──► luz vermelha
+```
 
-Vocês vão construir um sistema que, quando o aluno de solda pega a tocha, confere por câmera se ele está com os EPIs e dispara um alarme se faltar algum. Hoje vocês não programam nem instalam nada: hoje vocês descobrem o problema na oficina, levantam os materiais e fazem a primeira versão da modelagem.
+```
+epi-solda-yolo/
+├── instalar_windows.bat           # prepara o Windows (Python + Ultralytics + Label Studio)
+├── abrir_label_studio.bat         # abre a ferramenta de anotação
+├── enviar_para_pi.bat             # copia a pasta pi\ para o Raspberry via rede (SSH)
+├── dataset_tools/
+│   ├── coletar.py                 # tira fotos da webcam/vídeo por cenário (sessão)
+│   ├── label_studio_config.xml    # interface de anotação com as 8 classes
+│   ├── classes.txt
+│   └── dividir_dataset.py         # separa treino/validação por sessão e gera dataset.zip
+├── treino/
+│   ├── treinar_epi_solda.ipynb    # notebook do Google Colab (GPU grátis)
+│   └── treinar_local.py           # treino no próprio PC (bom se tiver placa NVIDIA)
+└── pi/
+    ├── config.py                  # TUDO que se ajusta por cabine fica aqui
+    ├── detector_epi.py            # programa que roda no Pi
+    ├── testar_regras.py           # testa a lógica sem câmera nem modelo
+    └── instalar_pi.sh             # instala dependências + serviço de inicialização
+```
 
-**Pergunta-guia:** como garantir que ninguém abra o arco sem os EPIs, sem vigiar nem expor os alunos?
+---
 
-**O que sai daqui hoje:**
+## Custo zero
 
-- Respostas da entrevista, lista de EPIs por processo e medidas da cabine.
-- Quadro de necessidades e as 3 ideias mais votadas.
-- Lista de materiais preenchida, com o que temos e o que falta.
-- Um artefato de modelagem v1 por equipe, salvo no repositório.
+Todo o software é gratuito. O único gasto é o hardware (Pi 3, webcam, módulo relé e sinalizador).
 
-**Regras de segurança na oficina de solda:**
+| Etapa | Ferramenta | Custo |
+|---|---|---|
+| Coleta, dataset, teste ao vivo | Python + OpenCV | grátis |
+| Anotação | Label Studio Community (local) | grátis |
+| Treino | Ultralytics YOLO26 no **Google Colab** (GPU T4 do plano grátis) | grátis |
+| Rodar no Pi | Raspberry Pi OS 64-bit + ONNX Runtime + gpiozero | grátis |
+| Enviar para o Pi | SSH/SCP que já vem no Windows | grátis |
 
-1. Ninguém olha para o arco sem proteção. Assistam à solda atrás da cortina ou com a proteção que o instrutor indicar.
-2. Usem os EPIs que o instrutor exigir para circular na oficina.
-3. Ninguém entra na cabine, encosta nas máquinas, nos cabos ou na tocha sem autorização.
+- **Ultralytics (AGPL-3.0):** grátis para uso escolar/didático. A licença paga só é exigida para vender ou distribuir o sistema com código fechado.
+- **Colab grátis:** a sessão cai se ficar parada ou depois de algumas horas, e às vezes a GPU não está disponível. O notebook salva tudo no Drive: basta reabrir e continuar. Se o Colab negar a GPU, o **Kaggle Notebooks** também é grátis (≈30 h de GPU por semana).
+- **PC deste projeto:** Ryzen 3 5400U com vídeo AMD, **sem NVIDIA**. Treine no Colab; o `treinar_local.py` aqui roda na CPU e leva muitas horas.
+- **Python:** use o **3.12** do python.org (grátis). O `instalar_windows.bat` pede 3.11–3.13, e o Label Studio pode falhar no 3.14.
 
-**Regras de privacidade do projeto:**
+---
 
-1. Nada de fotografar ou filmar pessoas: fotos só da cabine vazia.
-2. O sistema nunca vai identificar quem é o aluno, só se o EPI está lá.
-3. Nenhuma imagem de pessoa vai para o repositório público.
-4. Toda decisão vale só se estiver registrada (arquivo ou issue no repositório).
+## Checklist: o que fazer e com qual arquivo
 
-## Formem as equipes (10 min)
+| # | O que fazer | Arquivo | Pronto? |
+|---|---|---|---|
+| 1 | Instalar o Python 3.12 e rodar a instalação no Windows | [instalar_windows.bat](instalar_windows.bat) | ☐ |
+| 2 | Fixar a webcam na cabine na posição definitiva | — (ver passo 0) | ☐ |
+| 3 | Gravar as sessões de fotos, **com você como modelo** | [dataset_tools/coletar.py](dataset_tools/coletar.py) | ☐ |
+| 4 | Anotar as fotos (8 classes) | [abrir_label_studio.bat](abrir_label_studio.bat) + [dataset_tools/label_studio_config.xml](dataset_tools/label_studio_config.xml) | ☐ |
+| 5 | Exportar "YOLO with Images" e montar o `dataset.zip` | [dataset_tools/dividir_dataset.py](dataset_tools/dividir_dataset.py) | ☐ |
+| 6 | Subir o `dataset.zip` para `Meu Drive/epi_solda/` e treinar no Colab | [treino/treinar_epi_solda.ipynb](treino/treinar_epi_solda.ipynb) | ☐ |
+| 7 | Baixar `epi_solda.onnx` do Drive para `pi\modelos\` | [pi/modelos/](pi/modelos/) | ☐ |
+| 8 | Testar no Windows com a webcam | [pi/detector_epi.py](pi/detector_epi.py) `--mostrar` | ☐ |
+| 9 | Gravar o cartão do Pi (Raspberry Pi OS Lite **64-bit**, SSH ligado) | Raspberry Pi Imager | ☐ |
+| 10 | Mandar a pasta `pi\` para o Raspberry | [enviar_para_pi.bat](enviar_para_pi.bat) | ☐ |
+| 11 | Instalar no Pi e testar a lógica | [pi/instalar_pi.sh](pi/instalar_pi.sh), [pi/testar_regras.py](pi/testar_regras.py) | ☐ |
+| 12 | Ligar o relé e a luz no GPIO17 | — (ver passo 6) | ☐ |
+| 13 | Calibrar `ZONA_SUPORTE`, `CONFIANCA_MIN` etc. e ativar o serviço | [pi/config.py](pi/config.py) | ☐ |
+| 14 | Testar com outras pessoas e retreinar com os erros (v2) | notebook (fim) + `SALVAR_FOTOS` | ☐ |
 
-A turma se divide em cinco equipes de 4 a 6 pessoas; cada equipe é dona de uma parte do sistema, mas todas participam de todos os passos. Escrevam os nomes na tabela.
+> [treino/gerar_notebook.py](treino/gerar_notebook.py) só serve para recriar o `.ipynb`. Não precisa rodar.
 
-| Equipe | Do que cuida | Entrega de hoje | Integrantes |
-| --- | --- | --- | --- |
-| Campo e Usuário | Entrevista, observação, lista de EPIs e medidas da cabine | Respostas da entrevista e tabela de EPIs por processo |  |
-| Hardware e Sensores | Câmera, computador, gatilho da tocha, sirene, luz e proteção contra respingo e calor | Lista de materiais preenchida |  |
-| Visão Computacional | Modelo de detecção, conjunto de imagens e testes | Plano do conjunto de imagens |  |
-| Software e Modelagem | Lógica de decisão, alarme, registro de eventos, diagramas e repositório | Diagrama de blocos v1 e máquina de estados da cabine |  |
-| Segurança e Privacidade | Regras da oficina, posição dos equipamentos e regras de privacidade | Checklist de segurança e regras de privacidade v1 |  |
+---
 
-**Líder de projeto (troca a cada encontro):** \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+## Fluxo de trabalho: tudo no Windows, depois manda para o Pi
 
-O líder cria agora o repositório `epi-solda-visao` no GitHub, adiciona todos como colaboradores e cria as pastas `docs/entrevista`, `docs/materiais` e `docs/modelagem`, com um arquivo `.gitkeep` em cada uma, porque o Git não guarda pasta vazia.
+Todo o desenvolvimento roda no Windows; o Pi só recebe a pasta `pi\` pronta.
 
-## Passo 1 — Imersão na oficina de solda (40 min)
+| Etapa | Onde | Comando (na pasta do projeto) |
+|---|---|---|
+| Instalar | Windows | duplo clique em `instalar_windows.bat` |
+| Coletar fotos | Windows + webcam | `.venv\Scripts\python dataset_tools\coletar.py --sessao cab1_ok_ana --mostrar` |
+| Anotar | Windows | `abrir_label_studio.bat` |
+| Montar dataset | Windows | `.venv\Scripts\python dataset_tools\dividir_dataset.py --imagens export\images --rotulos export\labels --classes export\classes.txt --saida dataset --zip` |
+| Treinar | Windows c/ NVIDIA **ou** Colab | `.venv\Scripts\python treino\treinar_local.py --dataset dataset` |
+| Testar ao vivo | Windows + webcam | `.venv\Scripts\python pi\detector_epi.py --mostrar` |
+| Enviar | Windows → Pi | duplo clique em `enviar_para_pi.bat` |
+| Rodar | Pi | `bash instalar_pi.sh` (1ª vez) e `sudo systemctl restart epi-solda` |
 
-Vocês vão até as cabines para ver como a solda acontece de verdade, antes de pensar em qualquer solução. Antes de entrar, a equipe de Segurança e Privacidade confirma com o instrutor onde a turma pode ficar e quais EPIs são obrigatórios.
+- No Windows a luz roda em **modo simulado** automaticamente: aparece no terminal e como um círculo vermelho na janela do `--mostrar`. O mesmo código, sem mudar nada, aciona o relé quando roda no Pi.
+- Webcam USB num notebook costuma ser a câmera **1** (a 0 é a embutida): use `--fonte 1`.
+- O teste no Windows mostra se o **modelo** acerta. A velocidade real só se vê no Pi 3, que é bem mais lento.
+- **Use a mesma webcam e a mesma posição** na coleta e no Pi. Se coletar com a câmera ligada no notebook e depois passar para o Pi, a imagem é a mesma.
+- Ajuste o `pi\config.py` no Windows e reenvie: o `enviar_para_pi.bat` sobrescreve a pasta no Pi e já corrige as quebras de linha do Windows.
 
-**1.1 Observem uma solda (10 min).** Atrás da cortina, anotem em que momento o aluno veste cada EPI, onde a tocha fica antes e depois de soldar, e quando ele baixa a máscara.
+---
 
-**1.2 Entrevistem (15 min).** A equipe Campo conduz, as outras escutam e anotam. Preencham as respostas aqui mesmo.
+## As 8 classes (o que anotar)
 
-| Pergunta | Instrutor de soldagem | Aluno de solda |
-| --- | --- | --- |
-| Quais EPIs são obrigatórios em cada processo usado aqui? |  |  |
-| Quais EPIs os alunos mais esquecem ou tiram, e em que momento? |  |  |
-| Como o instrutor confere os EPIs hoje? O que escapa? |  |  |
-| Em quais processos existe tocha, e onde ela fica quando não está em uso? |  |  |
-| Quantas cabines existem, quantas pessoas usam cada uma e como é a iluminação dentro dela? |  |  |
-| Onde uma câmera ficaria sem receber respingo e sem apontar direto para o arco? |  |  |
-| O alarme deve avisar só o aluno ou também o instrutor? Como ele seria percebido de máscara abaixada? |  |  |
-| Tem tomada e rede perto das cabines? Pode fixar algo nelas? |  |  |
+O modelo não detecta bem a *ausência* de algo, então ensinamos ele a ver **o EPI** e também **a falta dele**.
 
-**1.3 EPIs por processo.** Com o instrutor, marquem com X o que é obrigatório em cada processo. Na última coluna, digam se dá para ver aquele EPI de longe, por uma câmera.
+| Classe | Caixa em volta de… |
+|---|---|
+| `tocha` | a tocha/pistola (corpo + pescoço), na mão **ou** pendurada no suporte |
+| `mao_com_luva` | cada mão com luva de raspa de solda |
+| `mao_sem_luva` | cada mão sem luva (luva de procedimento/fina também conta como **sem**) |
+| `avental` | o avental de raspa visível |
+| `tronco_sem_avental` | o tronco do aluno quando ele **não** está de avental |
+| `mascara_abaixada` | a máscara cobrindo o rosto (posição de soldar) |
+| `mascara_levantada` | a máscara na cabeça, virada para cima |
+| `cabeca_sem_mascara` | a cabeça/rosto sem máscara nenhuma |
 
-| EPI | Eletrodo revestido | MIG/MAG | TIG | Visível na câmera? |
-| --- | --- | --- | --- | --- |
-| Máscara de solda |  |  |  |  |
-| Óculos de segurança |  |  |  |  |
-| Luvas de raspa |  |  |  |  |
-| Avental ou jaqueta de raspa |  |  |  |  |
-| Mangote |  |  |  |  |
-| Perneira |  |  |  |  |
-| Botina de segurança |  |  |  |  |
-| Protetor auricular |  |  |  |  |
-| Outro: |  |  |  |  |
+**Regra da luz** (`avaliar_quadro()` em `detector_epi.py`):
 
-**1.4 Meçam e fotografem (10 min).** Usem trena e fotografem só a cabine vazia, de dentro para fora e de fora para dentro.
+1. A tocha está **em uso** se a caixa dela encosta numa caixa de mão — ou, se `ZONA_SUPORTE` estiver configurada, se ela saiu da zona do suporte.
+2. Com a tocha em uso, falta EPI quando aparece uma classe de falta (`mao_sem_luva`, `tronco_sem_avental`, `mascara_levantada`, `cabeca_sem_mascara`).
+   No `MODO_ESTRITO` (padrão), também conta como falta quando o EPI **não é visto** — é o comportamento mais seguro.
+3. Para não piscar, a luz acende quando **3 dos últimos 5** quadros têm violação e apaga depois de **3 quadros seguidos** sem violação (ajustável no `config.py`).
 
-| Medida | Valor (cm) |
-| --- | --- |
-| Largura da cabine |  |
-| Profundidade da cabine |  |
-| Altura da cabine (ou da cortina) |  |
-| Altura e posição do suporte da tocha |  |
-| Distância até a tomada mais próxima |  |
-| Distância até o ponto de rede mais próximo (se houver) |  |
+---
 
-As fotos vão para `docs/entrevista` no repositório, com nomes que digam o que mostram (`cabine-frente.jpg`, `suporte-tocha.jpg`).
+## Passo a passo
 
-## Passo 2 — Síntese e ideias (50 min)
+### 0. Posicionar a câmera (antes de coletar qualquer foto)
 
-De volta à sala, vocês transformam o que viram em necessidades e, só depois, em ideias. Depois deste passo, intervalo de 15 minutos.
+- Posição **fixa e definitiva**: o modelo aprende *aquela* cena. Mudou a câmera de lugar, precisa de mais dados.
+- Precisa enxergar ao mesmo tempo: tocha, as duas mãos, tronco e cabeça. Vista lateral/diagonal de cima costuma funcionar melhor que frontal.
+- **Não aponte direto para o arco** e proteja a lente com uma placa de policarbonato contra respingos.
+- Use exposição manual (`EXPOSICAO_MANUAL` no `config.py`) para a imagem não "estourar" quando o arco abre. O momento mais confiável da decisão é quando o aluno **pega a tocha**, antes do arco.
 
-**2.1 Quadro de necessidades (25 min).** Cada pessoa escreve post-its com o que viu e ouviu e cola na coluna certa. Depois, juntem os repetidos e passem para a tabela os mais importantes.
+### 1. Coletar imagens na cabine
 
-| O instrutor precisa garantir | Onde os EPIs falham hoje | Restrições da cabine |
-| --- | --- | --- |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+Com o Pi (ou um notebook) e **a mesma webcam já instalada**:
 
-Fechem a síntese com uma frase: **"O aluno de solda precisa \_\_\_\_\_\_ porque \_\_\_\_\_\_."**
+```bash
+python3 dataset_tools/coletar.py --sessao cab1_ok_ana --intervalo 0.7 --duracao 60
+```
 
-**2.2 Crazy 8s (25 min).**
+**Na 1ª versão, o modelo nas fotos é só você** (nenhum aluno aparece). Cada sessão é um cenário.
+Como o modelo vai ver uma pessoa só, **varie o máximo possível** para ele não "decorar" você:
 
-1. Cada pessoa dobra uma folha A4 em 8 partes.
-2. Em 8 minutos, desenha 8 ideias diferentes, uma por quadro, sem se preocupar com capricho.
-3. Cada ideia precisa mostrar três coisas: onde fica a câmera, o que avisa o sistema de que a solda vai começar (o gatilho) e como o alarme avisa.
-4. Cada um apresenta suas 2 melhores ideias em 1 minuto.
-5. Votação: cada pessoa tem 3 votos (bolinhas) e pode colocar mais de um na mesma ideia.
-6. Registrem as 3 mais votadas abaixo e fotografem as folhas para `docs/entrevista`.
+- roupas diferentes (cores, manga curta/longa, jaleco, camiseta), boné/cabelo preso ou solto;
+- as duas mãos, mão esquerda e direita na tocha, posições em pé/inclinado, de lado e de frente para a câmera;
+- horários e luz diferentes (manhã, tarde, luz da cabine acesa/apagada, porta aberta/fechada);
+- se tiver, luvas, aventais e máscaras de modelos e cores diferentes.
 
-| Ideia | Onde fica a câmera | Gatilho | Como o alarme avisa | Votos |
-| --- | --- | --- | --- | --- |
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
+Coloque um número de variação no fim do nome da sessão (`_r1`, `_r2`… = roupa/luz). O `dividir_dataset.py` separa a validação por sessão.
 
-## Passo 3 — Levantamento de materiais (45 min)
+| Sessão (exemplo) | O que você faz |
+|---|---|
+| `cab1_ok_tochamao_r1` | EPI completo, pega a tocha, posiciona para soldar |
+| `cab1_ok_arco_r1` | EPI completo **soldando de verdade** (o modelo precisa ver o arco) |
+| `cab1_ok_parado_r1` | EPI completo, tocha no suporte, mexendo na peça |
+| `cab1_semluva_r1` | sem luva em 1 e em 2 mãos, pegando a tocha |
+| `cab1_semavental_r1` | sem avental, pegando a tocha |
+| `cab1_mascaraup_r1` | máscara levantada na cabeça, pegando a tocha |
+| `cab1_semmascara_r1` | sem máscara, pegando a tocha |
+| `cab1_vazia_r1` | cabine vazia (ensina o que **não** é nada) |
 
-A equipe de Hardware e Sensores conduz, mas cada equipe confere os itens da sua parte com o professor e o almoxarifado. Na coluna "Temos?", escrevam **Sim**, **Não** ou **Verificar** em cada linha; o que ficar como "Não" vira lista de compras.
+Exemplo, com prévia para enquadrar (webcam USB no notebook costuma ser `--fonte 1`):
 
-| Item | Para quê | Temos? | Onde está ou preço + link |
-| --- | --- | --- | --- |
-| Notebook ou PC da escola + webcam USB | Protótipo na bancada |  |  |
-| Câmera USB 1080p ou Raspberry Pi Camera Module 3 | Ver a cabine |  |  |
-| Raspberry Pi 5 (4 GB ou mais) | Rodar o sistema na cabine |  |  |
-| Acelerador de IA para o Pi (AI HAT+) | Deixar a detecção mais rápida |  |  |
-| Cartão microSD 64 GB e fonte oficial do Pi 5 | Sistema e energia |  |  |
-| Chave fim de curso ou sensor magnético (reed switch + ímã) | Perceber que a tocha saiu do suporte |  |  |
-| Módulo relé | Acionar sirene e luz |  |  |
-| Sirene 12 V e sinaleiro luminoso verde/vermelho | Alarme |  |  |
-| Fonte 12 V | Alimentar sirene e sinaleiro |  |  |
-| Caixa metálica com janela de policarbonato | Proteger a câmera de respingo e calor |  |  |
-| Cabos USB blindados e ferrites | Reduzir a interferência elétrica da solda |  |  |
-| Canaleta metálica e abraçadeiras | Organizar os cabos |  |  |
-| EPIs de solda emprestados (máscara, luvas, avental, mangote) | Fotografar exemplos para o modelo |  |  |
-| Placa de aviso na cabine | Avisar que há detecção de EPI, sem gravação |  |  |
+```bat
+.venv\Scripts\python dataset_tools\coletar.py --sessao cab1_semluva_r1 --fonte 1 --duracao 60 --mostrar
+```
 
-**Itens que a ideia escolhida de vocês precisa a mais:**
+> ⚠️ **Segurança:** todo cenário **sem EPI** é gravado com a **máquina de solda desligada**: você só simula. Nunca abra arco sem EPI para gerar dados. Para a sessão `ok_arco`, peça para outra pessoa iniciar/parar a coleta.
 
-| Item | Para quê | Temos? | Onde está ou preço + link |
-| --- | --- | --- | --- |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+> 🔒 **LGPD:** como as fotos de treino são só suas, você pode subi-las para o Google Drive/Colab. Ainda assim, **evite o plano gratuito do Roboflow**: nele, todo projeto fica público no Roboflow Universe. Quando alunos entrarem nas imagens (testes reais e passo 8), aí sim precisa de autorização de uso de imagem (dos responsáveis, no caso de menores), e as fotos devem ficar nas máquinas da escola.
 
-**Dicas para decidir:**
+Meta para a 1ª versão: algumas centenas de fotos variadas (umas 30–60 por sessão, várias sessões de cada cenário), com pelo menos ~100 exemplos de cada classe. Depois o ciclo de melhoria (passo 8) aumenta isso com os erros reais.
 
-- Comecem pelo que a escola já tem: o protótipo inteiro pode rodar num notebook com webcam.
-- O Raspberry Pi só entra na versão instalada na cabine, e o acelerador de IA só se os testes mostrarem que falta velocidade.
-- Perto de fagulhas, plástico comum é risco: caixas e canaletas metálicas.
-- Para cotar, usem revendedores autorizados no Brasil, como RoboCore, FilipeFlop, Eletrogate e UsinaInfo, e colem o link na tabela.
+### 2. Anotar com o Label Studio (roda local, dados não saem da escola)
 
-## Passo 4 — Modelagem v1 (60 min)
+No Windows: duplo clique em `abrir_label_studio.bat` (abre em http://localhost:8080).
 
-Cada equipe transforma a ideia mais votada em um artefato de modelagem, usando só o que foi visto, medido e respondido na oficina. O que ficar em dúvida não é inventado: vira uma pergunta escrita no próprio artefato.
+1. Crie um projeto → **Settings › Labeling Interface › Code** → cole `dataset_tools/label_studio_config.xml`.
+2. Importe as fotos da pasta `coleta/` (pode dividir sessões entre os alunos; teclas 1–8 escolhem a classe).
+3. Regras de anotação (combine com a turma e siga **sempre igual**):
+   - anote **tudo** que aparece em **todas** as fotos, inclusive a tocha parada no suporte;
+   - objeto cortado na borda ou tampado: anote se dá para reconhecer (mais ou menos 1/3 visível);
+   - caixa justa no objeto, sem sobra grande.
+4. O professor revisa por amostragem (≈10%) — erro de anotação vira erro do modelo.
+5. **Export › YOLO with Images** → descompacte numa pasta `export/`.
 
-| Equipe | O que produzir | O artefato precisa responder | Ferramenta |
-| --- | --- | --- | --- |
-| Campo e Usuário | Lista de EPIs-alvo e regra de decisão | Quais 3 ou 4 EPIs o sistema confere primeiro, e o que conta como "está usando"? | README no GitHub |
-| Hardware e Sensores | Esboço da cabine com o campo de visão da câmera | Onde ficam câmera, gatilho e alarme, e o que a câmera enxerga dali? | Papel quadriculado, Tinkercad ou SketchUp |
-| Visão Computacional | Plano do conjunto de imagens | Quais classes, quantas imagens de cada, em que condições e com quem? | Tabela abaixo |
-| Software e Modelagem | Diagrama de blocos, máquina de estados da cabine e casos de uso | Quais partes existem, em que estados a cabine pode estar e quem faz o quê? | draw.io ou PlantUML |
-| Segurança e Privacidade | Checklist de segurança e regras de privacidade v1 | O sistema pode ser instalado sem risco e sem expor ninguém? | Este documento |
+### 3. Montar o dataset
 
-**Perguntas que todas as equipes precisam enfrentar:**
+```bash
+python3 dataset_tools/dividir_dataset.py --imagens export/images --rotulos export/labels \
+        --classes export/classes.txt --saida dataset --zip
+```
 
-1. Como a câmera vai enxergar se o arco da solda ofusca qualquer imagem?
-2. Como proteger a câmera de respingos, fumaça e calor?
-3. O que acontece se o aluno estiver de costas ou com as mãos fora da imagem?
-4. O aluno costuma posicionar a peça com a máscara levantada e só baixar na hora de abrir o arco. Como o sistema lida com isso?
-5. O que é pior: o alarme tocar sem motivo ou o sistema deixar passar a falta de um EPI? Como medir cada erro?
+Separa treino/validação **por sessão** (quadros do mesmo vídeo são quase iguais; misturar daria uma validação falsamente boa), mostra quantos exemplos cada classe tem e gera `dataset.zip`.
 
-**Plano do conjunto de imagens** (equipe Visão Computacional):
+### 4. Treinar (no PC ou no Colab)
 
-| Classe | Quantas imagens | Condições (luz, ângulo, distância) | Quem ou o que aparece |
-| --- | --- | --- | --- |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
-|  |  |  |  |
+**No Windows**, se tiver placa NVIDIA (siga o aviso do `instalar_windows.bat` para instalar o PyTorch com CUDA):
 
-**Regras de privacidade v1** (equipe Segurança e Privacidade). Respondam no README:
+```bat
+.venv\Scripts\python treino\treinar_local.py --dataset dataset
+```
 
-- O que a câmera captura, e o que é guardado?
-- Quem pode ver o registro de alarmes, e por quanto tempo ele fica guardado?
-- Como os alunos de solda vão ser avisados de que há câmera na cabine?
-- Como as imagens para treinar o modelo vão ser coletadas sem expor ninguém?
+Ele mostra as métricas por classe e já deixa o modelo em `pi\modelos\epi_solda.onnx`.
+Sem placa NVIDIA o treino roda na CPU, mas pode levar horas; prefira o Colab:
 
-**Lista de requisitos** (equipe Software e Modelagem, com sugestões de todas). Usem este formato no README:
+1. Suba `dataset.zip` para `Meu Drive/epi_solda/dataset.zip`.
+2. Abra `treino/treinar_epi_solda.ipynb` no Colab → **Ambiente de execução › Alterar tipo › GPU T4**.
+3. Rode as células em ordem. Os resultados ficam salvos no Drive em `epi_solda/treinos/epi_v1/`.
+4. Confira na célula 5 o **recall das classes de falta** — é ele que garante que a luz acende quando deve.
+5. A célula 7 gera `exportados/epi_solda.onnx` no Drive: baixe e coloque em `pi\modelos\epi_solda.onnx`.
 
-- RF01 — O sistema deve \_\_\_\_\_\_. (requisito funcional: o que o sistema faz)
-- RNF01 — O sistema deve \_\_\_\_\_\_. (requisito não funcional: em que condições ou com que qualidade)
+Antes de ir para o Pi, teste no Windows com a webcam: `.venv\Scripts\python pi\detector_epi.py --mostrar`.
 
-**Checklist da equipe de Segurança** (marquem só o que o instrutor confirmou):
+### 5. Instalar no Raspberry Pi 3
 
-- [ ] O local escolhido para a câmera fica fora da linha de respingos e do calor.
-- [ ] Nada do sistema será ligado à máquina de solda; o gatilho é só um sensor no suporte da tocha.
-- [ ] Caixas e fixações podem ser de material não inflamável.
-- [ ] Os cabos podem passar longe do cabo-terra, do cabo da tocha e do chão de passagem.
-- [ ] Extintor, cortinas e saídas continuam livres.
-- [ ] O alarme pode ser percebido de máscara abaixada e com protetor auricular.
+- Grave o cartão com **Raspberry Pi OS Lite (64-bit)** pelo Raspberry Pi Imager (o 32-bit não roda o ONNX Runtime). Em *Personalizar*, ative o **SSH** e o Wi-Fi.
+- No Windows, rode `enviar_para_pi.bat` (pede o IP e a senha do Pi; usa o SSH que já vem no Windows 10/11).
+- No Pi (pelo SSH: `ssh pi@IP`):
 
-Todo artefato leva no canto o nome da equipe e a marca **v1**.
+```bash
+cd ~/epi-solda-yolo/pi
+bash instalar_pi.sh
+~/epi-venv/bin/python testar_regras.py   # lógica OK?
+~/epi-venv/bin/python detector_epi.py    # modelo + câmera + relé
+```
 
-## Passo 5 — Apresentação e registro (15 min)
+> Se aparecer `$'\r': command not found`, o arquivo foi com quebra de linha do Windows: `sed -i 's/\r$//' *.sh *.py` (o `enviar_para_pi.bat` já faz isso).
 
-Cada equipe mostra o que produziu em 2 minutos, e tudo vai para o repositório antes de sair da sala.
+### 6. Ligar a luz
 
-1. Cada equipe apresenta seu artefato v1: o que decidiu e qual dúvida ficou.
-2. A turma faz no máximo uma pergunta por equipe.
-3. Cada dúvida aberta vira uma issue no GitHub, com o nome da equipe no título.
-4. Fotografem ou exportem os artefatos e façam commit em `docs/modelagem`, com mensagem clara (ex.: `modelagem: maquina de estados v1`).
-5. Antes do commit, confiram que nenhuma foto mostra pessoas.
-6. O líder de projeto confere se cada equipe fez pelo menos um commit.
+```
+Pi pino 2  (5V)      ──► VCC do módulo relé
+Pi pino 6  (GND)     ──► GND do módulo relé
+Pi pino 11 (GPIO17)  ──► IN  do módulo relé
+Relé COM + NA        ──► interrompem a alimentação do sinalizador vermelho
+```
 
-## Checklist de saída
+- Para testar na bancada, um LED + resistor de 330 Ω no GPIO17 basta.
+- Se a luz ficar invertida, troque `RELE_ATIVO_EM_BAIXO` no `config.py`.
+- Prefira sinalizador de **12/24 V** com fonte própria. Ligação em 127/220 V só por pessoa habilitada (NR-10).
 
-O encontro só termina quando todos os itens abaixo estiverem marcados.
+### 7. Calibrar e colocar para rodar sozinho
 
-- [ ] Equipes e líder de projeto definidos.
-- [ ] Repositório `epi-solda-visao` criado, com todos como colaboradores.
-- [ ] Tabela da entrevista preenchida pelas duas pessoas entrevistadas.
-- [ ] Tabela de EPIs por processo preenchida com o instrutor.
-- [ ] Medidas anotadas e fotos da cabine vazia no repositório.
-- [ ] Quadro de necessidades e frase de síntese prontos.
-- [ ] 3 ideias mais votadas registradas.
-- [ ] Lista de materiais com "Temos?" marcado em todas as linhas.
-- [ ] Um artefato v1 por equipe no repositório.
-- [ ] Regras de privacidade v1 e checklist de segurança revisados com o instrutor.
-- [ ] Nenhuma imagem de pessoa no repositório.
-- [ ] Dúvidas abertas registradas como issues.
+```bash
+~/epi-venv/bin/python detector_epi.py --mostrar   # precisa de monitor/VNC
+```
+
+- Clique na imagem para ver coordenadas e defina `ZONA_SUPORTE` (onde a tocha fica pendurada).
+- Ajuste `CONFIANCA_MIN`, `MODO_ESTRITO`, `JANELA`/`LIMIAR_LIGA` conforme os testes.
+- Sem monitor: `--salvar-video teste.mp4 --max-quadros 200` e assista no PC.
+- Quando estiver bom: `sudo systemctl enable --now epi-solda` (inicia sozinho ao ligar). Logs: `journalctl -u epi-solda -f`.
+- Cada violação fica registrada em `pi/registros/violacoes.csv` (início, fim, EPIs faltando).
+- Se a câmera desconectar, a luz vermelha **pisca** (modo falha).
+
+### 8. Ciclo de melhoria
+
+Um modelo treinado só com você pode errar com outras pessoas (outro tamanho, outra roupa, tom de pele). Este passo corrige isso.
+
+1. Ative `SALVAR_FOTOS = True` por alguns dias. As fotos agora são de alunos: só com autorização de uso de imagem, guardadas nas máquinas da escola (sem Drive/Colab), e o treino da v2 fica no PC local (lento, mas grátis; use `--epocas 60 --imgsz 320` e coloque `IMGSZ = 320` no `config.py`).
+2. Separe os **erros**: luz acesa sem motivo e faltas que passaram.
+3. Anote, rode o `dividir_dataset.py` de novo e treine `epi_v2` partindo do `best.pt` anterior (instruções no fim do notebook).
+
+---
+
+## Desempenho e limites
+
+- O Pi 3 analisa **poucos quadros por segundo** (o programa mostra o valor a cada 5 s). Para esta tarefa basta, porque a decisão é suavizada em ~2–3 s. Se ficar lento demais: treine e exporte com `IMGSZ = 320`, ou use um Pi 4/5 (aí dá para usar a pasta `_ncnn_model` com a biblioteca ultralytics, mais rápida).
+- O sistema é **didático e auxiliar**: não substitui a supervisão do instrutor nem as obrigações da NR-6, e **não** deve ser usado para cortar a máquina de solda sem projeto e avaliação de segurança próprios.
+- Uma câmera vê um ângulo só: mão escondida atrás do corpo ou máscara fora do quadro geram "não visto". O `MODO_ESTRITO` trata isso como falta, de propósito.
+
+## Divisão sugerida para a turma
+
+| Equipe | Responsável por |
+|---|---|
+| Dados | roteiro de cenários, coleta, autorizações |
+| Anotação | regras de anotação, revisão cruzada |
+| Treino | Colab, métricas, comparação entre versões |
+| Hardware | Pi, relé, sinalizador, caixa de proteção da câmera |
+| Software | `config.py`, regras, testes, painel com o `violacoes.csv` |

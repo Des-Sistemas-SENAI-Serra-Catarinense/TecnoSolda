@@ -1,0 +1,12 @@
+.venv/
+.venv-label/
+coleta/
+export/
+dataset/
+dataset.zip
+_dataset_extraido/
+treinos/
+runs/
+*.pt
+pi/registros/
+__pycache__/
