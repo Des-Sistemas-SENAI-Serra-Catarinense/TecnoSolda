@@ -1,0 +1,14 @@
+WELDING API — SITE MELHORADO
+
+Arquivos:
+- index.html: estrutura e conteúdo do site.
+- style.css: estilos, layout responsivo e animações.
+- script.js: menu móvel, filtros de EPIs, checklist interativo e a animação de solda do topo (clique na ilustração: 3 cliques soldam barras, o 4º chama o martelo).
+
+Como abrir:
+1. Extraia todos os arquivos da pasta ZIP para a mesma pasta.
+2. Abra index.html no navegador ou abra a pasta no Visual Studio Code.
+3. Para editar, mantenha os nomes dos arquivos e os três arquivos juntos.
+
+Conteúdo baseado no documento Guia de Segurança em Soldagem enviado pelo usuário.
+O material é informativo e não substitui treinamento, análise de risco, procedimentos locais nem orientação de profissional competente.

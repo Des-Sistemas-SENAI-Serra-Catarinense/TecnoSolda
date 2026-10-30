@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111315">
+  <meta name="description" content="Guia interativo de segurança em soldagem: EPIs, equipamentos, ambientes, riscos e prevenção.">
+  <title>Welding EPI | Guia de Segurança em Soldagem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+ :root {
+  --bg: #101214; --bg-soft: #171a1d; --panel: #1d2125; --line: #343b41;
+  --text: #f1f3f4; --muted: #a5afb7; --accent: #ff6a00; --accent-light: #ffb347;
+  --green: #a8d5a2; --max: 1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:"Barlow",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--accent-light);outline-offset:4px}
+.skip-link{position:absolute;top:-60px;left:16px;background:var(--accent);color:#111;padding:10px 14px;z-index:100}
+.skip-link:focus{top:12px}
+h1,h2,h3,.logo,.eyebrow,.btn,.card-kicker,.location-card>span,.footer-logo{font-family:"Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.035em}
+.accent,.footer-logo span{color:var(--accent)}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px max(5vw,calc((100vw - var(--max))/2));background:rgba(16,18,20,.94);backdrop-filter:blur(14px);border-bottom:1px solid #2d3338}
+.logo{display:flex;align-items:center;gap:8px;font-size:1.42rem;font-weight:800;white-space:nowrap}
+.logo-mark{display:grid;place-items:center;width:32px;height:32px;background:var(--accent);color:#111;clip-path:polygon(0 0,100% 0,100% 75%,75% 100%,0 100%);font-size:1.2rem}
+.topbar nav{display:flex;align-items:center;gap:clamp(14px,2.3vw,30px)}
+.topbar nav a{color:var(--muted);font-size:.92rem;font-weight:600;transition:color .2s}
+.topbar nav a:hover{color:white}
+.topbar nav .nav-cta{color:var(--accent-light)}
+.menu-toggle{display:none;background:transparent;border:1px solid var(--line);color:white;padding:5px 10px;border-radius:5px;font-size:1.3rem}
+.hero{position:relative;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:6%;padding:clamp(60px,8vw,112px) max(5vw,calc((100vw - var(--max))/2)) 105px;background:radial-gradient(ellipse at 80% 38%,rgba(255,106,0,.13),transparent 45%),repeating-linear-gradient(135deg,transparent 0 36px,rgba(255,255,255,.014) 36px 37px),var(--bg);border-bottom:1px solid var(--line)}
+.hero-copy{max-width:650px}
+.eyebrow{font-size:.86rem;font-weight:700;letter-spacing:.13em;color:var(--accent);margin-bottom:17px}
+.pulse,.status-dot{display:inline-block;width:8px;height:8px;background:var(--accent);border-radius:50%;margin-right:7px;box-shadow:0 0 13px #ff6a00}
+h1{font-size:clamp(3.2rem,6.4vw,6.25rem);line-height:.96;letter-spacing:-.015em;margin-bottom:25px}
+h1 span,h2 span{color:var(--accent)}
+.lead{font-size:1.15rem;max-width:610px;color:#bac2c8;line-height:1.8}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:13px 20px;font-size:1rem;font-weight:700;clip-path:polygon(0 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%);transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-3px)}
+.btn-primary{background:var(--accent);color:#111}
+.btn-primary:hover{background:var(--accent-light)}
+.btn-outline{border:1px solid #505960;color:var(--text);clip-path:none}
+.btn-outline:hover{border-color:var(--accent);background:rgba(255,106,0,.07)}
+.hero-points{display:flex;gap:25px;flex-wrap:wrap;margin-top:37px;color:var(--muted);font-size:.86rem}
+.hero-points b{color:var(--accent-light);font-family:"Barlow Condensed";margin-right:5px}
+.hero-art{height:390px;position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(145deg,#1c2024,#111315 65%);border:1px solid #353b40;clip-path:polygon(0 0,100% 0,100% 88%,88% 100%,0 100%)}
+.hero-art:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,black,transparent)}
+.art-label{position:absolute;z-index:5;left:20px;right:20px;font-size:.65rem;font-weight:700;letter-spacing:.1em;color:#9ca6ad}
+.label-top{top:20px}.label-bottom{bottom:18px;display:flex;justify-content:space-between}.label-bottom span{color:var(--accent)}
+.shield{position:absolute;z-index:4;left:45%;top:18%;width:120px;height:132px;background:linear-gradient(135deg,#626b72,#20262b 58%,#111);border:2px solid #8a9399;border-radius:14px 14px 35px 35px;transform:rotate(-16deg);box-shadow:14px 18px 25px #0008}
+.shield-window{position:absolute;left:18px;right:18px;top:24px;height:49px;background:linear-gradient(110deg,#111a20,#34444d 55%,#090c0e);border:3px solid #111;border-radius:5px}
+.shield-ridge{position:absolute;bottom:18px;left:23px;right:23px;height:4px;background:#889198;opacity:.7}
+.metal{position:absolute;left:10%;right:8%;height:76px;transform:skewX(-17deg);border:1px solid #727b82}
+.metal-back{bottom:92px;background:linear-gradient(#555f66,#282d32);box-shadow:0 0 0 5px #1115}
+.metal-front{bottom:62px;background:linear-gradient(#747d83,#3a4146 45%,#24292d);border-top:3px solid #a7b0b5;box-shadow:0 22px 30px #0009}
+.weld-line{position:absolute;left:20%;right:15%;top:-6px;height:9px;background:#ffb347;border-radius:50%;box-shadow:0 0 14px 4px #ff6a00,0 0 40px 12px #ff6a0050;animation:glow 1.5s ease-in-out infinite alternate}
+.weld-beam{position:absolute;z-index:3;left:51%;top:28%;width:3px;height:110px;background:linear-gradient(transparent,#ffb347);transform:rotate(20deg);filter:drop-shadow(0 0 8px #ff6a00)}
+.arc-burst{position:absolute;z-index:5;left:53%;top:51%;width:0;height:0}
+.arc-burst i{position:absolute;width:4px;height:4px;border-radius:50%;background:#ffd18b;box-shadow:0 0 10px 3px #ff6a00;animation:spark 1.3s ease-out infinite}
+.arc-burst i:nth-child(1){--x:-85px;--y:-80px}.arc-burst i:nth-child(2){--x:65px;--y:-105px;animation-delay:.2s}.arc-burst i:nth-child(3){--x:95px;--y:-38px;animation-delay:.4s}.arc-burst i:nth-child(4){--x:-45px;--y:-130px;animation-delay:.6s}.arc-burst i:nth-child(5){--x:-120px;--y:-35px;animation-delay:.8s}.arc-burst i:nth-child(6){--x:28px;--y:-75px;animation-delay:1s}.arc-burst i:nth-child(7){--x:125px;--y:-75px;animation-delay:.3s}
+@keyframes spark{0%{transform:translate(0,0);opacity:1}100%{transform:translate(var(--x),var(--y));opacity:0}}
+@keyframes glow{from{opacity:.65}to{opacity:1}}
+.hero-warning{position:absolute;left:max(5vw,calc((100vw - var(--max))/2));right:max(5vw,calc((100vw - var(--max))/2));bottom:-34px;display:flex;align-items:center;gap:14px;padding:16px 20px;background:#24282b;border:1px solid #444b50;box-shadow:0 12px 28px #0003}
+.warning-icon{display:grid;place-items:center;flex:none;width:31px;height:31px;border:1px solid var(--accent);color:var(--accent);font-weight:800;border-radius:50%}
+.hero-warning p{color:#c7cdd1;font-size:.9rem}.hero-warning strong{color:white}
+.section{padding:clamp(65px,8vw,105px) max(5vw,calc((100vw - var(--max))/2))}
+.section-dark{background:var(--bg-soft);border-top:1px solid #252a2e;border-bottom:1px solid #252a2e}
+.intro-section{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding-top:125px;padding-bottom:80px}
+.section-heading{max-width:750px;margin-bottom:34px}
+h2{font-size:clamp(2.35rem,4.2vw,4rem);line-height:1.05;margin-bottom:15px}
+.section-lead{max-width:740px;color:var(--muted);font-size:1.02rem}
+.intro-copy{padding-top:17px;color:#b8c0c6}.intro-copy p+p{margin-top:15px}
+.text-link{display:inline-flex;gap:10px;margin-top:19px;color:var(--accent-light);font-weight:700}
+.text-link span{transition:transform .2s}.text-link:hover span{transform:translate(3px,-2px)}
+.filter-row{display:flex;gap:9px;flex-wrap:wrap;margin:30px 0 26px}
+.filter-btn{border:1px solid #41484e;background:transparent;color:#b8c0c6;padding:8px 14px;border-radius:3px;cursor:pointer;font-size:.88rem;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#111;font-weight:700}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.info-card{background:linear-gradient(145deg,#202428,#191c1f);border:1px solid #343b40;padding:24px 23px;min-height:250px;position:relative;transition:transform .2s,border-color .2s}
+.info-card:hover{transform:translateY(-4px);border-color:#9b4b19}
+.info-card[hidden]{display:none}
+.card-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:18px;background:#3b261a;color:var(--accent-light);font-size:1.5rem;border:1px solid #65401f}
+.card-kicker{display:block;color:var(--accent-light);font-size:.7rem;letter-spacing:.12em;margin-bottom:7px}
+.info-card h3,.risk-card h3,.location-card h3,.responsibility-grid h3{font-size:1.42rem;line-height:1.15;margin-bottom:9px}
+.info-card p,.risk-card p,.location-card p,.responsibility-grid p{color:var(--muted);font-size:.93rem}
+.tag{display:inline-block;margin-top:17px;padding:4px 8px;border:1px solid #3f464c;color:#c0c7cc;font-size:.72rem}
+.small-note{color:var(--accent-light);font-size:.87rem;margin-top:23px}
+.equipment-layout{display:grid;grid-template-columns:1.55fr .75fr;gap:35px;align-items:start}
+.equipment-list{border-top:1px solid var(--line)}
+.equipment-list details{border-bottom:1px solid var(--line)}
+.equipment-list summary{display:flex;align-items:center;gap:15px;list-style:none;cursor:pointer;padding:17px 4px}
+.equipment-list summary::-webkit-details-marker{display:none}
+.equip-num{color:var(--accent);font-family:"Barlow Condensed";font-weight:800;font-size:1.25rem;width:32px;flex:none}
+.equipment-list summary span:nth-child(2){flex:1}
+.equipment-list summary strong{display:block;font-size:1rem}
+.equipment-list summary small{display:block;color:var(--muted);font-size:.85rem;margin-top:3px}
+.equipment-list summary>b{font-size:1.3rem;color:var(--accent);transition:transform .2s}
+.equipment-list details[open] summary>b{transform:rotate(45deg)}
+.equipment-list details>p{color:var(--muted);padding:0 40px 18px 51px;font-size:.9rem}
+.equipment-aside{background:linear-gradient(150deg,#292e32,#1a1d20);border:1px solid #41484e;padding:30px;position:sticky;top:100px}
+.aside-symbol{font-size:2.8rem;color:var(--accent);margin-bottom:20px}
+.equipment-aside h3{font-size:1.8rem;line-height:1.1;margin-bottom:13px}
+.equipment-aside>p:not(.eyebrow){color:var(--muted);font-size:.94rem}
+.location-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.location-card{min-height:215px;padding:25px;background:#1c2023;border:1px solid #343a3f;border-top:3px solid #575f65;transition:border-color .2s,transform .2s}
+.location-card:hover{border-top-color:var(--accent);transform:translateY(-3px)}
+.location-card>span{display:block;color:var(--accent-light);font-size:.72rem;letter-spacing:.12em;margin-bottom:19px}
+.location-card h3{font-size:1.5rem}
+.risk-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.risk-card{padding:22px;background:#191c1f;border:1px solid #30363b}
+.risk-symbol{display:grid;place-items:center;width:39px;height:39px;color:var(--accent-light);background:#382419;border:1px solid #674024;font-size:1.4rem;margin-bottom:18px}
+.risk-card h3{font-size:1.3rem}
+.checklist-section{background:radial-gradient(ellipse at 10% 30%,rgba(255,106,0,.07),transparent 40%),var(--bg)}
+.checklist-shell{display:grid;grid-template-columns:230px 1fr;border:1px solid #373e43;background:#171a1d}
+.check-tabs{display:flex;flex-direction:column;padding:16px;border-right:1px solid #343a40;gap:8px}
+.check-tab{display:flex;align-items:center;gap:15px;text-align:left;padding:17px 15px;border:1px solid transparent;background:transparent;color:#929da5;cursor:pointer;font-family:"Barlow Condensed";font-weight:700;font-size:1rem}
+.check-tab span{font-size:1.18rem;text-transform:uppercase;letter-spacing:.05em}
+.check-tab.active{background:#2c211a;border-color:#75401f;color:white}
+.check-tab.active:first-letter{color:var(--accent)}
+.check-content{padding:27px 30px}
+.check-progress{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:.82rem;margin-bottom:20px}
+.progress-track{height:5px;background:#333a40;flex:1;overflow:hidden}
+#progress-fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+.check-items{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.check-item{display:flex;align-items:flex-start;gap:11px;padding:14px;background:#202428;border:1px solid #343a40;cursor:pointer;min-height:77px}
+.check-item input{accent-color:var(--accent);margin-top:5px;width:17px;height:17px;flex:none}
+.check-item span{font-size:.91rem;color:#d0d5d8;line-height:1.45}
+.check-item:has(input:checked){border-color:#5e754f;background:#20271f}
+.check-item:has(input:checked) span{color:#8da38a;text-decoration:line-through;text-decoration-color:#687d62}
+.check-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:21px;color:var(--muted);font-size:.8rem}
+.text-button{border:0;background:none;color:var(--accent-light);cursor:pointer;font-weight:700}
+.stop-banner{display:flex;gap:15px;align-items:flex-start;margin-top:22px;padding:20px;border:1px solid #744323;background:#2a1d16}
+.stop-icon{display:grid;place-items:center;flex:none;width:30px;height:30px;background:var(--accent);color:#111;font-weight:900;border-radius:50%}
+.stop-banner strong{font-size:1rem}.stop-banner p{color:#c7bcb5;font-size:.9rem;margin-top:3px}
+.collective-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 32px}
+.collective-item{display:flex;gap:17px;padding:22px 0;border-bottom:1px solid #353b40}
+.collective-item>b{font-family:"Barlow Condensed";font-size:1.5rem;color:var(--accent);min-width:30px}
+.collective-item h3{font-size:1.3rem;margin-bottom:3px}
+.collective-item p{font-size:.9rem;color:var(--muted)}
+.responsibility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.responsibility-grid article{border:1px solid var(--line);padding:25px;background:#171a1d}
+.resp-number{font-family:"Barlow Condensed";font-size:2.4rem;color:var(--accent);margin-bottom:15px}
+.table-wrap{overflow-x:auto;border:1px solid #363d42}
+table{width:100%;border-collapse:collapse;min-width:720px;text-align:left}
+th{font-family:"Barlow Condensed";text-transform:uppercase;letter-spacing:.07em;color:var(--accent-light);background:#252a2e;font-size:.9rem}
+th,td{padding:16px 18px;border-bottom:1px solid #353b40;vertical-align:top}
+td{color:#c3cbd0;font-size:.91rem}
+tbody tr:hover{background:#202428}
+.standards-section{background:var(--bg)}
+.source-list{border-top:1px solid var(--line)}
+.source-list>a{display:flex;align-items:center;gap:17px;padding:18px 5px;border-bottom:1px solid var(--line);transition:padding .2s}
+.source-list>a:hover{padding-left:12px;background:#171a1d}
+.source-icon{display:grid;place-items:center;flex:none;width:39px;height:39px;background:#302219;color:var(--accent-light);border:1px solid #66401f}
+.source-list>a>span:nth-child(2){flex:1}
+.source-list strong{display:block;font-size:1rem}
+.source-list small{display:block;color:var(--muted);font-size:.84rem;margin-top:3px}
+.source-arrow{color:var(--accent);font-size:1.1rem}
+.disclaimer{display:flex;gap:14px;margin-top:27px;padding:21px;border:1px solid #454b50;background:#1a1e21;color:#b9c2c8}
+.disclaimer>span{color:var(--accent-light);font-size:1.4rem}
+.disclaimer p{font-size:.88rem}.disclaimer strong{color:white}
+.closing-cta{text-align:center;padding:80px 5vw;background:radial-gradient(ellipse at 50% 0,rgba(255,106,0,.15),transparent 60%),#171a1d;border-top:1px solid var(--line)}
+.closing-cta h2{font-size:clamp(2.5rem,5vw,4.5rem)}
+.closing-cta>p:not(.eyebrow){color:var(--muted);margin:15px 0 25px}
+footer{display:flex;align-items:center;gap:25px;justify-content:space-between;padding:25px max(5vw,calc((100vw - var(--max))/2));border-top:1px solid #30363b;color:var(--muted);font-size:.8rem}
+.footer-logo{font-size:1.1rem;font-weight:800;white-space:nowrap;color:white}
+footer p{max-width:650px}
+.copyright{white-space:nowrap}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:40px}.hero-art{max-width:650px;width:100%;margin:auto}.hero-warning{bottom:-45px}.intro-section{padding-top:135px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.location-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.risk-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.equipment-layout{grid-template-columns:1fr}.equipment-aside{position:static}.topbar nav{gap:13px}.topbar nav a{font-size:.82rem}}
+@media(max-width:640px){.topbar{padding:12px 5vw}.menu-toggle{display:block}.topbar nav{display:none;position:absolute;top:100%;left:0;right:0;padding:15px 5vw 20px;background:#15181a;border-bottom:1px solid var(--line);align-items:stretch;flex-direction:column;gap:0}.topbar nav.open{display:flex}.topbar nav a{padding:11px 0;border-bottom:1px solid #292e32;font-size:.95rem}.hero{padding:54px 5vw 95px}.hero-art{height:300px}.hero-warning{left:5vw;right:5vw;bottom:-58px;padding:13px}.hero-warning p{font-size:.8rem}.intro-section{grid-template-columns:1fr;gap:18px;padding-top:125px}.section{padding:62px 5vw}.cards,.location-grid,.risk-grid,.responsibility-grid{grid-template-columns:1fr}.info-card{min-height:0}.location-card{min-height:0}.checklist-shell{grid-template-columns:1fr}.check-tabs{display:grid;grid-template-columns:repeat(3,1fr);border-right:0;border-bottom:1px solid #343a40;padding:10px}.check-tab{justify-content:center;gap:7px;padding:11px 5px}.check-tab span{font-size:.95rem}.check-content{padding:20px 15px}.check-items{grid-template-columns:1fr}.check-footer{align-items:flex-start;flex-direction:column}.collective-grid{grid-template-columns:1fr}.source-list>a{gap:11px}.source-list strong{font-size:.91rem}footer{flex-wrap:wrap;gap:10px}footer p{order:3;flex-basis:100%}.copyright{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* ===== Interação de solda (hero) ===== */
+.hero-art[role="button"]{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:border-color .2s}
+.hero-art[role="button"]:hover{border-color:#ff6a0099}
+.hero-art:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.hero-art.is-busy{cursor:progress}
+.shield,.weld-beam,.arc-burst{transition:opacity .5s}
+.hero-art.is-playing .shield,.hero-art.is-playing .weld-beam,.hero-art.is-playing .arc-burst{opacity:0}
+.weld-hint{position:absolute;z-index:5;left:20px;top:46px;display:flex;align-items:center;gap:9px;max-width:calc(100% - 40px);padding:6px 10px;background:#000a;border:1px solid #ff6a0088;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+.weld-hint b{color:var(--accent)}
+.bar{position:absolute;z-index:2;left:18%;right:18%;height:22px;bottom:calc(170px + var(--i) * 25px);visibility:hidden}
+.half{position:absolute;top:0;bottom:0;transform:skewX(-17deg);background:linear-gradient(#8e989e,#5a646b 45%,#2b3136);border:1px solid #7b858b;border-top:2px solid #b3bcc1;box-shadow:0 8px 14px #0007}
+.half-l{left:0;width:50%}.half-r{left:50%;width:50%}
+.bar.broken .half-l{clip-path:polygon(0 0,100% 0,86% 28%,100% 52%,88% 76%,100% 100%,0 100%)}
+.bar.broken .half-r{clip-path:polygon(14% 0,100% 0,100% 100%,0 100%,12% 74%,0 50%,12% 26%)}
+.bar.broken .seam{opacity:0}
+.seam{position:absolute;left:0;right:0;bottom:-4px;height:6px;border-radius:3px;background:#ffe2a8;box-shadow:0 0 12px 4px #ff6a00,0 0 26px 8px #ff6a0066;transform:skewX(-17deg) scaleX(0);transform-origin:left center;transition:background 2s,box-shadow 2s}
+.seam.cooled{background:#a8571d;box-shadow:0 0 6px 1px #ff6a0055}
+.torch{position:absolute;z-index:6;left:18%;bottom:169px;width:0;height:0;opacity:0;pointer-events:none}
+.torch-rod{position:absolute;left:-6px;bottom:12px;width:12px;height:130px;border-radius:6px 6px 3px 3px;background:linear-gradient(90deg,#2a2f33,#9aa4aa 45%,#2a2f33);transform-origin:50% 100%;transform:rotate(32deg)}
+.torch-rod:after{content:"";position:absolute;left:2px;bottom:-12px;width:8px;height:14px;border-radius:1px 1px 4px 4px;background:linear-gradient(90deg,#8a4f22,#e3a05a,#8a4f22)}
+.torch-arc{position:absolute;left:-10px;bottom:-10px;width:20px;height:20px;border-radius:50%;background:radial-gradient(#fff,#ffd18b 45%,#ff6a00 75%,transparent);box-shadow:0 0 14px 6px #ff6a00;animation:torch-flicker .09s ease-in-out infinite alternate}
+.torch-sparks i{position:absolute;left:0;bottom:0;width:3px;height:3px;border-radius:50%;background:#ffd18b;box-shadow:0 0 8px 2px #ff6a00;animation:spark .7s ease-out infinite}
+.torch-sparks i:nth-child(1){--x:-30px;--y:-40px}.torch-sparks i:nth-child(2){--x:25px;--y:-55px;animation-delay:.15s}.torch-sparks i:nth-child(3){--x:45px;--y:-20px;animation-delay:.3s}.torch-sparks i:nth-child(4){--x:-12px;--y:-62px;animation-delay:.45s}.torch-sparks i:nth-child(5){--x:-50px;--y:-18px;animation-delay:.6s}
+@keyframes torch-flicker{from{transform:scale(.85)}to{transform:scale(1.2)}}
+.impact{position:absolute;z-index:6;left:50%;bottom:215px;width:240px;height:240px;border-radius:50%;background:radial-gradient(rgba(255,235,190,.95),rgba(255,106,0,.45) 35%,transparent 65%);opacity:0;transform:translate(-50%,50%);pointer-events:none}
+.hammer{position:absolute;z-index:7;left:50%;bottom:262px;width:0;height:0;visibility:hidden;pointer-events:none}
+.hammer-body{position:absolute;left:0;top:0;width:0;height:0}
+.hammer-handle{position:absolute;left:-7px;bottom:0;width:14px;height:280px;border-radius:4px;background:linear-gradient(90deg,#5e3a1a,#a56d36 50%,#5e3a1a)}
+.hammer-head{position:absolute;left:-46px;top:-20px;width:92px;height:40px;border:2px solid #aab3b8;border-radius:5px;background:linear-gradient(#9aa4aa,#59636a 50%,#2d3338);box-shadow:0 10px 18px #000a}
+.chip{position:absolute;z-index:8;left:50%;bottom:215px;width:6px;height:6px;background:#c9d1d5;pointer-events:none}
+.chip.hot{width:4px;height:4px;border-radius:50%;background:#ffd18b;box-shadow:0 0 8px 2px #ff6a00}
+@media(prefers-reduced-motion:reduce){.torch-arc,.torch-sparks i{animation:none}}
+@media(max-width:640px){.hero-art{height:340px}}
+
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="topbar">
+    <a href="#inicio" class="logo" aria-label="Welding EPI, início"><span class="logo-mark">W</span> WELDING<span class="accent">EPI</span></a>
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">☰</button>
+    <nav id="main-nav" aria-label="Navegação principal">
+      <a href="#epis">EPIs</a>
+      <a href="#equipamentos">Equipamentos</a>
+      <a href="#riscos">Riscos</a>
+      <a href="#procedimento">Checklist</a>
+      <a href="#normas" class="nav-cta">Normas e fontes ↗</a>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse"></span> GUIA PRÁTICO · SAÚDE E SEGURANÇA</p>
+        <h1>Soldar com técnica.<br><span>Proteger com atitude.</span></h1>
+        <p class="lead">Um guia de consulta para conhecer os EPIs, equipamentos, locais de trabalho e cuidados que ajudam a reduzir riscos nas atividades de soldagem.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#procedimento">Ver checklist de segurança <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#epis">Conhecer os EPIs</a>
+        </div>
+        <div class="hero-points">
+          <span><b>01</b> Prevenir</span><span><b>02</b> Inspecionar</span><span><b>03</b> Proteger</span>
+        </div>
+      </div>
+      <div class="hero-art" role="button" tabindex="0" aria-label="Ilustração interativa de uma placa metálica: clique para soldar barras e, por fim, quebrar tudo com um martelo">
+        <div class="art-label label-top"><span class="status-dot"></span> ÁREA DE TRABALHO A QUENTE</div>
+        <div class="shield"><div class="shield-window"></div><div class="shield-ridge"></div></div>
+        <div class="arc-burst"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="weld-beam"></div>
+        <div class="metal metal-back"></div><div class="metal metal-front"><div class="weld-line"></div></div>
+        <div class="bar" style="--i:0"><div class="half half-l"></div><div class="half half-r"></div><div class="seam"></div></div><div class="bar" style="--i:1"><div class="half half-l"></div><div class="half half-r"></div><div class="seam"></div></div><div class="bar" style="--i:2"><div class="half half-l"></div><div class="half half-r"></div><div class="seam"></div></div>
+        <div class="torch" aria-hidden="true"><div class="torch-rod"></div><div class="torch-arc"></div><div class="torch-sparks"><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="impact" aria-hidden="true"></div>
+        <div class="hammer" aria-hidden="true"><div class="hammer-body"><div class="hammer-handle"></div><div class="hammer-head"></div></div></div>
+        <div class="weld-hint" aria-live="polite"><b id="weld-count">0/3</b><span id="weld-hint-text">Clique para soldar a 1ª barra</span></div>
+        <div class="art-label label-bottom">SEGURANÇA É PARTE DO PROCESSO <span>///</span></div>
+      </div>
+      <div class="hero-warning"><span class="warning-icon">!</span><p><strong>Importante:</strong> a soldagem deve ser realizada por pessoas capacitadas, em ambiente autorizado e sob supervisão responsável.</p></div>
+    </section>
+
+    <section class="section intro-section">
+      <div class="section-heading">
+        <p class="eyebrow">O PRINCÍPIO</p><h2>O EPI é essencial.<br><span>A prevenção vai além dele.</span></h2>
+      </div>
+      <div class="intro-copy">
+        <p>EPI é o equipamento de uso individual destinado a proteger o trabalhador contra riscos ocupacionais. A seleção deve considerar o processo, os materiais, o ambiente e a avaliação de riscos.</p>
+        <p>O EPI complementa — mas não substitui — a ventilação, a exaustão, o isolamento da área, as proteções coletivas e os procedimentos de trabalho seguro.</p>
+        <a class="text-link" href="#protecao-coletiva">Entenda a proteção coletiva <span>↗</span></a>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="epis">
+      <div class="section-heading">
+        <p class="eyebrow">01 / PROTEÇÃO INDIVIDUAL</p><h2>Conheça os <span>EPIs</span></h2>
+        <p class="section-lead">A proteção correta depende da tarefa e da avaliação de risco. Selecione uma categoria para filtrar os itens.</p>
+      </div>
+      <div class="filter-row" role="group" aria-label="Filtrar equipamentos de proteção">
+        <button class="filter-btn active" data-filter="todos" aria-pressed="true">Todos</button>
+        <button class="filter-btn" data-filter="visual" aria-pressed="false">Olhos e face</button>
+        <button class="filter-btn" data-filter="corpo" aria-pressed="false">Corpo e mãos</button>
+        <button class="filter-btn" data-filter="ambiente" aria-pressed="false">Ruído e respiração</button>
+        <button class="filter-btn" data-filter="especial" aria-pressed="false">Situações específicas</button>
+      </div>
+      <div class="cards epi-grid" id="epi-grid">
+        <article class="info-card" data-category="visual"><div class="card-icon">◉</div><span class="card-kicker">OLHOS E FACE</span><h3>Máscara ou capacete de soldagem</h3><p>Protege os olhos e o rosto contra a radiação do arco, clarões e partículas. O filtro deve ser adequado ao processo e à tarefa.</p><span class="tag">Filtro apropriado</span></article>
+        <article class="info-card" data-category="visual"><div class="card-icon">◎</div><span class="card-kicker">PROTEÇÃO OCULAR</span><h3>Óculos de segurança</h3><p>Usados na preparação, escovação, limpeza e tarefas auxiliares. Podem ser necessários sob a máscara, conforme o risco.</p><span class="tag">Contra partículas</span></article>
+        <article class="info-card" data-category="visual"><div class="card-icon">◉</div><span class="card-kicker">CORTE A GÁS</span><h3>Óculos com filtro específico</h3><p>Para operações de corte ou aquecimento com chama. Não substituem a proteção facial exigida para cada tarefa.</p><span class="tag">Filtro específico</span></article>
+        <article class="info-card" data-category="corpo"><div class="card-icon">▤</div><span class="card-kicker">MÃOS</span><h3>Luvas para soldagem</h3><p>Ajudam a proteger contra calor, respingos e abrasão. Devem ser compatíveis com o processo e permitir o controle seguro das peças.</p><span class="tag">Resistentes ao calor</span></article>
+        <article class="info-card" data-category="corpo"><div class="card-icon">▥</div><span class="card-kicker">TRONCO E PERNAS</span><h3>Avental, jaqueta e calça</h3><p>Vestimentas apropriadas, em boas condições, que cubram a pele e ofereçam resistência ao calor e aos respingos.</p><span class="tag">Vestimenta adequada</span></article>
+        <article class="info-card" data-category="corpo"><div class="card-icon">▰</div><span class="card-kicker">PÉS</span><h3>Botas de segurança</h3><p>Protegem contra impactos, objetos quentes e respingos. O solado e as características de proteção devem ser adequados ao ambiente.</p><span class="tag">Proteção dos pés</span></article>
+        <article class="info-card" data-category="ambiente"><div class="card-icon">≋</div><span class="card-kicker">RUÍDO</span><h3>Proteção auditiva</h3><p>Pode ser necessária em locais com ruído elevado, como em operações de esmerilhamento ou corte. A escolha depende da avaliação.</p><span class="tag">Conforme o ruído</span></article>
+        <article class="info-card" data-category="ambiente"><div class="card-icon">◌</div><span class="card-kicker">AR E CONTAMINANTES</span><h3>Proteção respiratória</h3><p>Pode ser necessária contra fumos, gases ou partículas quando os controles de engenharia não forem suficientes. O tipo depende da avaliação profissional.</p><span class="tag">Seleção técnica</span></article>
+        <article class="info-card" data-category="especial"><div class="card-icon">▧</div><span class="card-kicker">PROTEÇÃO COMPLEMENTAR</span><h3>Capuz, proteção de pescoço e perneiras</h3><p>Podem complementar a proteção contra respingos e calor em tarefas específicas, conforme a avaliação de risco.</p><span class="tag">Conforme a tarefa</span></article>
+        <article class="info-card" data-category="especial"><div class="card-icon">↟</div><span class="card-kicker">TRABALHO EM ALTURA</span><h3>Sistema contra quedas</h3><p>Quando aplicável, integra um sistema planejado de proteção contra quedas. Exige capacitação e planejamento próprios.</p><span class="tag">Planejamento específico</span></article>
+      </div>
+      <p class="small-note">Verifique a integridade, o ajuste e a adequação dos EPIs. Confira o Certificado de Aprovação (CA) quando exigido pela regulamentação.</p>
+    </section>
+
+    <section class="section" id="equipamentos">
+      <div class="section-heading">
+        <p class="eyebrow">02 / FERRAMENTAS E ESTRUTURA</p><h2>Equipamentos de <span>soldagem</span></h2>
+        <p class="section-lead">Cada item tem uma função e requer inspeção, uso correto e manutenção conforme as instruções do fabricante.</p>
+      </div>
+      <div class="equipment-layout">
+        <div class="equipment-list">
+          <details open><summary><span class="equip-num">01</span><span><strong>Fonte de energia / máquina de solda</strong><small>Fornece corrente e características elétricas para o processo.</small></span><b>＋</b></summary><p>Comum em oficinas, manutenção industrial, fabricação e montagem.</p></details>
+          <details><summary><span class="equip-num">02</span><span><strong>Porta-eletrodo e eletrodos revestidos (SMAW)</strong><small>Conduzem corrente e fornecem material de adição.</small></span><b>＋</b></summary><p>Usados com frequência em manutenção e estruturas metálicas.</p></details>
+          <details><summary><span class="equip-num">03</span><span><strong>Tocha MIG/MAG e alimentador de arame</strong><small>Conduzem arame consumível e gás de proteção.</small></span><b>＋</b></summary><p>Aplicações em fabricação, oficinas e produção seriada.</p></details>
+          <details><summary><span class="equip-num">04</span><span><strong>Tocha TIG e vareta de adição</strong><small>Permitem controle preciso com eletrodo de tungstênio não consumível.</small></span><b>＋</b></summary><p>Usadas, por exemplo, em peças finas e trabalhos que exigem acabamento.</p></details>
+          <details><summary><span class="equip-num">05</span><span><strong>Cilindros, reguladores e mangueiras</strong><small>Fornecem e controlam gases conforme o processo.</small></span><b>＋</b></summary><p>Exigem identificação, inspeção e armazenamento seguro.</p></details>
+          <details><summary><span class="equip-num">06</span><span><strong>Exaustão local e ventilação</strong><small>Ajudam a capturar ou remover fumos e gases.</small></span><b>＋</b></summary><p>Devem ser planejadas para o local sem espalhar contaminantes para outras pessoas.</p></details>
+          <details><summary><span class="equip-num">07</span><span><strong>Bancadas, grampos e dispositivos de fixação</strong><small>Mantêm as peças estáveis e organizadas.</small></span><b>＋</b></summary><p>Use a estrutura adequada à peça e mantenha a área organizada.</p></details>
+          <details><summary><span class="equip-num">08</span><span><strong>Ferramentas de limpeza, esmerilhadeiras e corte</strong><small>Preparação, limpeza, acabamento e corte.</small></span><b>＋</b></summary><p>Exigem acessórios compatíveis, proteções da máquina e proteção ocular, facial e auditiva conforme o risco.</p></details>
+          <details><summary><span class="equip-num">09</span><span><strong>Cabos, conectores e instalações elétricas</strong><small>Fazem parte da alimentação elétrica.</small></span><b>＋</b></summary><p>Devem ser compatíveis, inspecionados e mantidos sem danos. Reparos cabem a pessoal autorizado.</p></details>
+          <details><summary><span class="equip-num">10</span><span><strong>Cortinas, biombos e recursos de emergência</strong><small>Isolamento da área e resposta a incidentes.</small></span><b>＋</b></summary><p>Barreiras reduzem a exposição de terceiros; extintores e recursos de emergência devem seguir o plano local.</p></details>
+        </div>
+        <aside class="equipment-aside"><div class="aside-symbol">⚙</div><p class="eyebrow">REGRA DE OURO</p><h3>Equipamento danificado não volta ao uso sem avaliação.</h3><p>Inspecione cabos, conectores, tochas, mangueiras, reguladores, proteções e acessórios. Retire de uso os itens danificados e comunique o responsável.</p><a href="#procedimento" class="text-link">Abrir checklist <span>→</span></a></aside>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="locais">
+      <div class="section-heading">
+        <p class="eyebrow">03 / AMBIENTES DE TRABALHO</p><h2>O local também <span>faz diferença</span></h2>
+        <p class="section-lead">As condições do ambiente mudam os riscos e os controles necessários.</p>
+      </div>
+      <div class="location-grid">
+        <article class="location-card"><span>01 / OFICINA</span><h3>Oficina de soldagem</h3><p>Bancadas, máquinas, ferramentas de preparação, cortinas, exaustão e armazenamento organizado de EPIs.</p></article>
+        <article class="location-card"><span>02 / PRODUÇÃO</span><h3>Fábrica e linha de produção</h3><p>Postos delimitados, fixação das peças, ventilação, barreiras e inspeções programadas.</p></article>
+        <article class="location-card"><span>03 / MANUTENÇÃO</span><h3>Manutenção industrial</h3><p>Serviço autorizado, avaliação do local, isolamento de fontes de energia e verificação de combustíveis e instalações.</p></article>
+        <article class="location-card"><span>04 / MONTAGEM</span><h3>Construção metálica</h3><p>Área isolada e sinalizada, com controles adicionais para altura, intempéries e queda de objetos quando aplicável.</p></article>
+        <article class="location-card"><span>05 / NAVAL</span><h3>Estaleiros e reparação naval</h3><p>Regras específicas para trabalho a quente, ventilação, atmosferas perigosas e espaços confinados. A NR-34 é especialmente relevante.</p></article>
+        <article class="location-card"><span>06 / CONDIÇÕES ESPECIAIS</span><h3>Área externa ou espaço confinado</h3><p>Avaliação formal das condições ambientais, autorização, monitoramento atmosférico, ventilação, vigia e plano de resgate quando aplicável.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="riscos">
+      <div class="section-heading">
+        <p class="eyebrow">04 / IDENTIFICAR PARA PREVENIR</p><h2>Principais <span>riscos</span></h2>
+        <p class="section-lead">Reconhecer os perigos ajuda a escolher medidas de controle antes de iniciar o trabalho.</p>
+      </div>
+      <div class="risk-grid">
+        <article class="risk-card"><span class="risk-symbol">☼</span><h3>Radiação do arco</h3><p>Radiação ultravioleta e infravermelha pode afetar olhos e pele.</p></article>
+        <article class="risk-card"><span class="risk-symbol">♨</span><h3>Calor e queimaduras</h3><p>Metal quente, respingos, escória e superfícies aquecidas.</p></article>
+        <article class="risk-card"><span class="risk-symbol">≋</span><h3>Fumos e gases</h3><p>Podem surgir do processo, revestimentos, contaminantes e materiais próximos.</p></article>
+        <article class="risk-card"><span class="risk-symbol">ϟ</span><h3>Choque elétrico</h3><p>Cabos danificados, conexões inadequadas, umidade ou manutenção incorreta.</p></article>
+        <article class="risk-card"><span class="risk-symbol">△</span><h3>Incêndio e explosão</h3><p>Faíscas e calor podem atingir materiais combustíveis ou atmosferas perigosas.</p></article>
+        <article class="risk-card"><span class="risk-symbol">⦿</span><h3>Ruído e partículas</h3><p>Corte, esmerilhamento e acabamento podem gerar ruído e projeções.</p></article>
+        <article class="risk-card"><span class="risk-symbol">↕</span><h3>Ergonomia e cargas</h3><p>Posturas inadequadas, movimentação de cargas e queda de objetos.</p></article>
+        <article class="risk-card"><span class="risk-symbol">⌁</span><h3>Condições especiais</h3><p>Altura, espaços confinados, áreas externas e ambientes em operação exigem controles adicionais.</p></article>
+      </div>
+    </section>
+
+    <section class="section checklist-section" id="procedimento">
+      <div class="section-heading">
+        <p class="eyebrow">05 / ROTINA SEGURA</p><h2>Checklist antes, durante <span>e depois</span></h2>
+        <p class="section-lead">Use esta lista como lembrete de estudo. Ela não substitui os procedimentos locais nem a avaliação de uma pessoa competente.</p>
+      </div>
+      <div class="checklist-shell">
+        <div class="check-tabs" role="tablist" aria-label="Etapas da atividade">
+          <button class="check-tab active" role="tab" aria-selected="true" data-stage="antes">01 <span>Antes</span></button>
+          <button class="check-tab" role="tab" aria-selected="false" data-stage="durante">02 <span>Durante</span></button>
+          <button class="check-tab" role="tab" aria-selected="false" data-stage="depois">03 <span>Depois</span></button>
+        </div>
+        <div class="check-content">
+          <div class="check-progress"><span id="progress-label">0 de 6 concluídos</span><div class="progress-track"><div id="progress-fill"></div></div></div>
+          <div id="check-items" class="check-items"></div>
+          <div class="check-footer"><button id="reset-checklist" class="text-button">↺ Reiniciar esta etapa</button><span id="stage-status" aria-live="polite">Marque os itens conferidos.</span></div>
+        </div>
+      </div>
+      <div class="stop-banner"><span class="stop-icon">!</span><div><strong>Condição insegura? Pare e comunique.</strong><p>Interrompa o trabalho e avise o responsável se houver falha, cheiro incomum, ventilação insuficiente, risco de incêndio ou qualquer condição insegura.</p></div></div>
+    </section>
+
+    <section class="section section-dark" id="protecao-coletiva">
+      <div class="section-heading">
+        <p class="eyebrow">06 / CONTROLES DO AMBIENTE</p><h2>Proteção coletiva e <span>organização</span></h2>
+        <p class="section-lead">A segurança é construída com barreiras, planejamento, manutenção e boas condições de trabalho.</p>
+      </div>
+      <div class="collective-grid">
+        <div class="collective-item"><b>01</b><div><h3>Ventilação e exaustão</h3><p>Projetadas para os fumos e gases gerados pelo processo.</p></div></div>
+        <div class="collective-item"><b>02</b><div><h3>Isolamento e sinalização</h3><p>Cortinas, biombos e barreiras para proteger terceiros.</p></div></div>
+        <div class="collective-item"><b>03</b><div><h3>Organização do espaço</h3><p>Limpeza e rotas de circulação livres de obstáculos.</p></div></div>
+        <div class="collective-item"><b>04</b><div><h3>Prevenção de incêndio</h3><p>Controle de combustíveis e inspeção do entorno antes e depois do trabalho a quente.</p></div></div>
+        <div class="collective-item"><b>05</b><div><h3>Manutenção preventiva</h3><p>Inspeção de máquinas, instalações elétricas, cabos e acessórios.</p></div></div>
+        <div class="collective-item"><b>06</b><div><h3>Procedimentos formais</h3><p>Permissão de trabalho, bloqueio/etiquetagem e monitoramento atmosférico quando exigidos pela avaliação de risco.</p></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="responsabilidades">
+      <div class="section-heading"><p class="eyebrow">07 / CONSERVAÇÃO</p><h2>Responsabilidades e <span>manutenção dos EPIs</span></h2></div>
+      <div class="responsibility-grid">
+        <article><div class="resp-number">A</div><h3>Organização / empresa</h3><p>Selecionar EPIs conforme os riscos, fornecer os adequados, orientar e treinar trabalhadores e manter os registros exigidos.</p></article>
+        <article><div class="resp-number">B</div><h3>Trabalhador</h3><p>Usar o EPI para a finalidade prevista, cuidar da conservação e comunicar danos, perda ou inadequação.</p></article>
+        <article><div class="resp-number">C</div><h3>Inspeção e guarda</h3><p>Não usar itens trincados, queimados, deformados, contaminados, com filtros danificados ou ajuste incorreto. Seguir as instruções do fabricante para limpeza e troca.</p></article>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="referencia">
+      <div class="section-heading"><p class="eyebrow">08 / CONSULTA RÁPIDA</p><h2>Risco, controle <span>e local</span></h2><p class="section-lead">Exemplos resumidos do guia. A proteção definitiva deve ser escolhida conforme o processo e a avaliação real.</p></div>
+      <div class="table-wrap"><table><thead><tr><th>Atividade / risco</th><th>Proteção ou controle típico</th><th>Local comum</th></tr></thead><tbody>
+        <tr><td>Soldagem a arco</td><td>Máscara com filtro correto, vestimenta e luvas próprias, barreiras e exaustão.</td><td>Oficina, fábrica, montagem.</td></tr>
+        <tr><td>Preparação e esmerilhamento</td><td>Óculos e proteção facial adequados, proteção auditiva quando indicada e guarda da máquina.</td><td>Bancada ou área de acabamento.</td></tr>
+        <tr><td>Corte / aquecimento a gás</td><td>Proteção ocular específica, vestimenta adequada, inspeção de mangueiras e controles de gás.</td><td>Área autorizada para trabalho a quente.</td></tr>
+        <tr><td>Fumos e gases</td><td>Exaustão localizada; respirador selecionado por avaliação profissional quando necessário.</td><td>Qualquer local com geração de fumos.</td></tr>
+        <tr><td>Risco de incêndio</td><td>Remoção ou isolamento de combustíveis, vigilância e recursos de emergência conforme o plano.</td><td>Área isolada e sinalizada.</td></tr>
+        <tr><td>Trabalho em altura / espaço confinado</td><td>Sistema específico de prevenção, autorização, monitoramento e resgate quando aplicável.</td><td>Estrutura elevada ou espaço confinado.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section class="section standards-section" id="normas">
+      <div class="section-heading"><p class="eyebrow">09 / FONTES OFICIAIS</p><h2>Normas e <span>referências</span></h2><p class="section-lead">Consulte as versões vigentes e os procedimentos aplicáveis ao local de trabalho.</p></div>
+      <div class="source-list">
+        <a href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-paritaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/norma-regulamentadora-no-6-nr-6" target="_blank" rel="noopener"><span class="source-icon">↗</span><span><strong>NR-6 — Equipamento de Proteção Individual</strong><small>Ministério do Trabalho e Emprego</small></span><span class="source-arrow">↗</span></a>
+        <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/equipamentos-de-protecao-individual" target="_blank" rel="noopener"><span class="source-icon">↗</span><span><strong>EPI e Certificado de Aprovação (CA)</strong><small>Página oficial do Ministério do Trabalho e Emprego</small></span><span class="source-arrow">↗</span></a>
+        <a href="https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-paritaria-permanente/normas-regulamentadora/normas-regulamentadoras-vigentes/norma-regulamentadora-no-34-nr-34" target="_blank" rel="noopener"><span class="source-icon">↗</span><span><strong>NR-34 — Indústria da construção, reparação e desmonte naval</strong><small>Referência especialmente relevante para o setor naval</small></span><span class="source-arrow">↗</span></a>
+        <a href="https://www.gov.br/trabalho-e-emprego/pt-br/assuntos/inspecao-do-trabalho/seguranca-e-saude-no-trabalho/ctpp-nrs/normas-regulamentadoras-nrs" target="_blank" rel="noopener"><span class="source-icon">↗</span><span><strong>Relação oficial das Normas Regulamentadoras</strong><small>Consulte as normas e atualizações disponíveis</small></span><span class="source-arrow">↗</span></a>
+      </div>
+      <div class="disclaimer"><span>ⓘ</span><p><strong>Nota de responsabilidade</strong><br>Este conteúdo é informativo e não substitui treinamento, análise de risco, procedimentos da empresa ou orientação de profissional de segurança do trabalho. A seleção final de EPIs, filtros, controles de incêndio e requisitos para trabalho a quente deve ser feita por profissionais competentes, considerando o processo, o material, o local e os riscos reais.</p></div>
+    </section>
+
+    <section class="closing-cta"><p class="eyebrow">SEGURANÇA EM PRIMEIRO LUGAR</p><h2>Planeje. Inspecione. <span>Proteja.</span></h2><p>Um trabalho seguro começa antes de ligar a máquina.</p><a class="btn btn-primary" href="#inicio">Voltar ao início ↑</a></section>
+  </main>
+
+  <footer><a href="#inicio" class="footer-logo">WELDING<span>EPI</span></a><p>Guia informativo de segurança em soldagem · Consulte as normas vigentes e os procedimentos locais.</p><span class="copyright">© 2026 Welding EPI</span></footer>
+  <script>
+(() => {
+  const menuButton = document.getElementById('menu-toggle');
+  const nav = document.getElementById('main-nav');
+  if (menuButton && nav) {
+    menuButton.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+      menuButton.textContent = open ? '×' : '☰';
+    });
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      nav.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Abrir menu');
+      menuButton.textContent = '☰';
+    }));
+  }
+
+  // Filtro acessível dos cards de EPI
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const epiCards = document.querySelectorAll('.info-card');
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+    filterButtons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+    epiCards.forEach(card => {
+      card.hidden = filter !== 'todos' && card.dataset.category !== filter;
+    });
+  }));
+
+  // Checklist por etapa: os itens são lembretes, não autorização para executar o serviço.
+  const stages = {
+    antes: [
+      'Confirmar autorização do serviço e avaliação dos riscos por pessoa competente.',
+      'Verificar se a área está sinalizada e isolada, protegendo as pessoas próximas.',
+      'Retirar ou proteger materiais combustíveis e verificar os controles contra incêndio.',
+      'Inspecionar cabos, conectores, tochas, mangueiras, reguladores e acessórios.',
+      'Confirmar ventilação/exaustão adequada e EPIs compatíveis com os riscos.',
+      'Confirmar treinamento, instruções do fabricante e procedimentos locais.'
+    ],
+    durante: [
+      'Manter proteção ocular e facial adequada e cobrir a pele exposta.',
+      'Impedir que pessoas sem proteção fiquem expostas ao arco ou às projeções.',
+      'Manter ventilação/exaustão funcionando e controlar a fonte dos contaminantes.',
+      'Manter cabos e mangueiras organizados, longe do calor, danos e passagens.',
+      'Não soldar recipientes que possam conter inflamáveis sem avaliação e procedimento formal.',
+      'Interromper o trabalho e avisar o responsável diante de qualquer condição insegura.'
+    ],
+    depois: [
+      'Desligar e guardar os equipamentos conforme as instruções e o procedimento local.',
+      'Inspecionar a área e os arredores para identificar calor residual ou risco de incêndio.',
+      'Identificar peças quentes e deixá-las em local seguro.',
+      'Limpar, inspecionar e armazenar os EPIs adequadamente.',
+      'Comunicar danos, desgaste, perda ou inadequação dos equipamentos.',
+      'Registrar defeitos e não devolver equipamentos danificados ao uso antes da avaliação.'
+    ]
+  };
+  const labels = {antes:'Antes da atividade',durante:'Durante a atividade',depois:'Depois da atividade'};
+  const checkItems = document.getElementById('check-items');
+  const progressLabel = document.getElementById('progress-label');
+  const progressFill = document.getElementById('progress-fill');
+  const stageStatus = document.getElementById('stage-status');
+  const resetButton = document.getElementById('reset-checklist');
+  const tabs = document.querySelectorAll('.check-tab');
+  let currentStage = 'antes';
+  const checked = {antes: new Set(), durante: new Set(), depois: new Set()};
+
+  function updateProgress() {
+    const total = stages[currentStage].length;
+    const count = checked[currentStage].size;
+    progressLabel.textContent = `${count} de ${total} concluídos`;
+    progressFill.style.width = `${count / total * 100}%`;
+    stageStatus.textContent = count === total ? 'Etapa conferida. Siga os procedimentos autorizados.' : 'Marque os itens conferidos.';
+  }
+  function renderStage(stage) {
+    currentStage = stage;
+    tabs.forEach(tab => {
+      const active = tab.dataset.stage === stage;
+      tab.classList.toggle('active', active);
+      tab.setAttribute('aria-selected', String(active));
+    });
+    checkItems.replaceChildren();
+    stages[stage].forEach((item, index) => {
+      const label = document.createElement('label');
+      label.className = 'check-item';
+      const input = document.createElement('input');
+      input.type = 'checkbox';
+      input.checked = checked[stage].has(index);
+      input.addEventListener('change', () => {
+        if (input.checked) checked[stage].add(index);
+        else checked[stage].delete(index);
+        updateProgress();
+      });
+      const span = document.createElement('span');
+      span.textContent = item;
+      label.append(input, span);
+      checkItems.append(label);
+    });
+    updateProgress();
+  }
+  tabs.forEach(tab => tab.addEventListener('click', () => renderStage(tab.dataset.stage)));
+  resetButton?.addEventListener('click', () => {
+    checked[currentStage].clear();
+    renderStage(currentStage);
+  });
+  renderStage(currentStage);
+  // Interação de solda no hero: 3 cliques soldam barras; o 4º chama o martelo.
+  const art = document.querySelector('.hero-art');
+  if (art) {
+    const bars = [...art.querySelectorAll('.bar')];
+    const torch = art.querySelector('.torch');
+    const hammer = art.querySelector('.hammer');
+    const hammerBody = art.querySelector('.hammer-body');
+    const impact = art.querySelector('.impact');
+    const hintText = document.getElementById('weld-hint-text');
+    const hintCount = document.getElementById('weld-count');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const SKEW = 'skewX(-17deg)';
+    const BASE = 170, STEP = 25; // mesmos valores do CSS (.bar)
+    const hints = ['Clique para soldar a 1ª barra', 'Clique para soldar a 2ª barra', 'Clique para soldar a 3ª barra', 'Clique para dar a martelada'];
+    let welded = 0, busy = false;
+
+    // Atalho para o Web Animations EPI: devolve uma Promise que resolve ao terminar.
+    const run = (el, frames, o) => el.animate(frames, {
+      fill: 'forwards', easing: 'linear', ...o,
+      duration: reduced ? 1 : o.duration, delay: reduced ? 0 : (o.delay || 0)
+    }).finished;
+    const cancelAll = el => el.getAnimations({subtree: true}).forEach(a => a.cancel());
+    const setHint = () => { hintCount.textContent = `${welded}/3`; hintText.textContent = hints[welded]; };
+
+    async function weldBar(i) {
+      const bar = bars[i], seam = bar.querySelector('.seam');
+      cancelAll(torch);
+      bar.style.visibility = 'visible';
+      await run(bar, [{transform: 'translateY(-90px)', opacity: 0}, {transform: 'translateY(0)', opacity: 1}], {duration: 380, easing: 'cubic-bezier(.3,.8,.4,1)'});
+      torch.style.bottom = `${BASE + i * STEP - 1}px`;
+      await run(torch, [{opacity: 0}, {opacity: 1}], {duration: 150});
+      const travel = {duration: 1600};
+      await Promise.all([
+        run(torch, [{left: '18%'}, {left: '82%'}], travel),
+        run(seam, [{transform: `${SKEW} scaleX(0)`}, {transform: `${SKEW} scaleX(1)`}], travel)
+      ]);
+      await run(torch, [{opacity: 1}, {opacity: 0}], {duration: 200});
+      seam.classList.add('cooled'); // o cordão esfria aos poucos
+      welded++;
+    }
+
+    function impactEffects() {
+      run(impact, [{opacity: 1, transform: 'translate(-50%,50%) scale(.3)'}, {opacity: 0, transform: 'translate(-50%,50%) scale(1.4)'}], {duration: 380, easing: 'ease-out'});
+      if (reduced) return;
+      art.animate([
+        {transform: 'translate(0,0)'}, {transform: 'translate(-7px,4px)'}, {transform: 'translate(6px,-4px)'},
+        {transform: 'translate(-3px,2px)'}, {transform: 'translate(0,0)'}
+      ], {duration: 380});
+      for (let n = 0; n < 18; n++) {
+        const chip = document.createElement('i');
+        chip.className = 'chip' + (Math.random() < .45 ? ' hot' : '');
+        art.append(chip);
+        const dx = (Math.random() - .5) * 320, peak = -(50 + Math.random() * 120), r = (Math.random() - .5) * 720;
+        chip.animate([
+          {transform: 'translate(0,0) rotate(0deg)', opacity: 1, easing: 'ease-out'},
+          {transform: `translate(${dx * .6}px,${peak}px) rotate(${r / 2}deg)`, opacity: 1, offset: .4, easing: 'cubic-bezier(.5,0,1,.6)'},
+          {transform: `translate(${dx}px,${peak + 280}px) rotate(${r}deg)`, opacity: 0}
+        ], {duration: 700 + Math.random() * 400}).finished.then(() => chip.remove());
+      }
+    }
+
+    function resetScene() {
+      bars.forEach(bar => {
+        const seam = bar.querySelector('.seam');
+        cancelAll(bar);
+        bar.classList.remove('broken');
+        seam.style.transition = 'none';
+        seam.classList.remove('cooled');
+        void seam.offsetWidth;
+        seam.style.transition = '';
+        bar.style.visibility = 'hidden';
+      });
+      cancelAll(hammer);
+      hammer.style.visibility = 'hidden';
+      welded = 0;
+    }
+
+    async function smash() {
+      hammer.style.visibility = 'visible';
+      await run(hammerBody, [
+        {transform: 'translate(110px,-120px) rotate(40deg)', easing: 'ease-out'},
+        {transform: 'translate(150px,-170px) rotate(62deg)', offset: .4, easing: 'cubic-bezier(.7,0,1,.6)'},
+        {transform: 'translate(0,0) rotate(0deg)'}
+      ], {duration: 620});
+      impactEffects();
+      bars.forEach(b => b.classList.add('broken'));
+      const falls = bars.flatMap((bar, i) => ['l', 'r'].map(side => {
+        const d = side === 'l' ? -1 : 1;
+        return run(bar.querySelector('.half-' + side), [
+          {transform: `translate(0,0) rotate(0deg) ${SKEW}`, easing: 'ease-out'},
+          {transform: `translate(${d * 10}px,-16px) rotate(${d * 5}deg) ${SKEW}`, offset: .12, easing: 'cubic-bezier(.5,0,1,.7)'},
+          {transform: `translate(${d * (40 + i * 18)}px,520px) rotate(${d * (30 + i * 12)}deg) ${SKEW}`}
+        ], {duration: 900 + i * 70, delay: (2 - i) * 70}); // a barra de cima cai primeiro
+      }));
+      const retract = (async () => {
+        await new Promise(r => setTimeout(r, reduced ? 0 : 260));
+        await run(hammerBody, [{transform: 'translate(0,0) rotate(0deg)', opacity: 1}, {transform: 'translate(70px,-100px) rotate(30deg)', opacity: 0}], {duration: 450});
+      })();
+      await Promise.all([retract, ...falls]);
+      resetScene();
+    }
+
+    async function activate() {
+      if (busy) return;
+      busy = true;
+      art.classList.add('is-playing', 'is-busy');
+      try {
+        if (welded < 3) { hintText.textContent = 'Soldando…'; await weldBar(welded); }
+        else { hintText.textContent = 'Martelando…'; await smash(); art.classList.remove('is-playing'); }
+      } finally {
+        busy = false;
+        art.classList.remove('is-busy');
+        setHint();
+      }
+    }
+    art.addEventListener('click', activate);
+    art.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  }
+})();
+</script>
+</body>
+</html>
