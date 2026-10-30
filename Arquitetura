@@ -1,0 +1,10 @@
+Arquitetura proposta para cada box
+Cada box terá seu próprio conjunto de monitoramento, capaz de analisar as imagens localmente.
+
+O funcionamento seria:
+1. Câmera IP Wi-Fi: captura as imagens do aluno.
+2. Raspberry Pi 3 Modelo B: recebe as imagens e executa a inteligência artificial.
+3. Análise local: o programa verifica se os EPIs obrigatórios foram identificados.
+4. Detecção da interação: o sistema identifica o contato com a máquina, conforme o método que vocês definirem.
+5. Alerta: se houver uma condição de risco, o sistema envia um aviso ao professor.
+O Raspberry Pi 3 Modelo B possui Wi-Fi integrado, portanto não precisa de um adaptador Wi-Fi adicional. A câmera IP também poderá transmitir imagens sem fio, desde que seja compatível com a rede escolhida.

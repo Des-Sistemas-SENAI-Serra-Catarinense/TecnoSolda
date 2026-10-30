@@ -1,0 +1,21 @@
+BOX 1
+Câmera IP ── Wi-Fi ── Raspberry Pi 1
+    │                       │
+ Tomada                  Tomada
+                            │
+                            └── Análise dos EPIs
+
+BOX 2
+Câmera IP ── Wi-Fi ── Raspberry Pi 2
+    │                       │
+ Tomada                  Tomada
+                            │
+                            └── Análise dos EPIs
+
+              REDE WI-FI LOCAL
+                     │
+                     ▼
+            Computador do professor
+             Recebe os alertas
+
+A câmera e o Raspberry não precisam estar conectados fisicamente entre si. Basta que ambos estejam na rede local e que o Raspberry consiga acessar o fluxo de vídeo da câmera.
